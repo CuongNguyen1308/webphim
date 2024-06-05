@@ -158,6 +158,8 @@ class IndexController extends Controller
         $year = $_GET['year'];
         if($order == '' && $genre == '' && $country == '' && $year == ''){
             return redirect()->back();
+        }else{
+            
         }
     }
 }
