@@ -20,6 +20,7 @@
                 <div class="section-bar clearfix">
                     <h1 class="section-title"><span>{{ $cate_slug->title }}</span></h1>
                 </div>
+                
                 <div class="section-bar clearfix">
                     @include('pages.include.filter')
                 </div>

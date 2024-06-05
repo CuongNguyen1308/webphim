@@ -101,12 +101,14 @@
                         <td>
                             {!! Form::selectYear('year', 2000, 2024, isset($value->year) ? $value->year : '', [
                                 'class' => 'select-year',
+                                'placeholder' => '-Chọn-',
                                 'id' => $value->id,
                             ]) !!}
                         </td>
                         <td>
                             {!! Form::selectRange('season', 0, 20, isset($value->season) ? $value->season : '', [
                                 'class' => 'select-season',
+                                'placeholder' => '-Chọn-',
                                 'id' => $value->id,
                             ]) !!}
                         </td>
@@ -115,7 +117,7 @@
                                 'topview',
                                 ['0' => 'Ngày', '1' => 'Tuần', '2' => 'Tháng'],
                                 isset($value->topview) ? $value->topview : '',
-                                ['class' => 'select-topview', 'id' => $value->id],
+                                ['class' => 'select-topview', 'placeholder' => '-Chọn-','id' => $value->id ],
                             ) !!}
                         </td>
                         <td>{{ $value->created_at }}</td>

@@ -20,6 +20,9 @@
                 <div class="section-bar clearfix">
                     <h1 class="section-title"><span>{{ $gen_slug->title }}</span></h1>
                 </div>
+                <div class="section-bar clearfix">
+                    @include('pages.include.filter')
+                </div>
                 <div class="halim_box">
                     @foreach ($movie as $key => $value)
                         <article class="col-md-3 col-sm-3 col-xs-6 thumb grid-item post-27021">

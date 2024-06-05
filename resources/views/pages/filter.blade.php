@@ -2,18 +2,7 @@
 @section('content')
     <div class="row container" id="wrapper">
         <div class="halim-panel-filter">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="yoast_breadcrumb hidden-xs"><span><span>Phim thuộc năm »
-                                    @for ($year = 2000; $year <= 2024; $year++)
-                                        <a class="breadcrumb_last" aria-current="page" href="{{ url('nam/' . $year) }}">{{ $year }}</a> »
-                                    @endfor
-                                </span></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <div id="ajax-filter" class="panel-collapse collapse" aria-expanded="true" role="menu">
                 <div class="ajax"></div>
             </div>
@@ -21,7 +10,7 @@
         <main id="main-contents" class="col-xs-12 col-sm-12 col-md-8">
             <section>
                 <div class="section-bar clearfix">
-                    <h1 class="section-title"><span>Năm: {{ $nam }}</span></h1>
+                    <h1 class="section-title"><span>Lọc phim</span></h1>
                 </div>
                 <div class="section-bar clearfix">
                     @include('pages.include.filter')
@@ -45,20 +34,18 @@
                                         @elseif ($value->resolution == 3)
                                             Cam
                                         @elseif ($value->resolution == 4)
-                                        FullHD
-                                    @else
-                                        Trailer
+                                            FullHD
+                                        @else
+                                            Trailer
                                         @endif
                                     </span><span class="episode"><i class="fa fa-play" aria-hidden="true"></i>
                                         @if ($value->episode_count > 0)
                                             {{ $value->episode_count }}/{{ $value->episodes }} |
-                                        @endif 
+                                        @endif
                                         @if ($value->sub == 0)
                                             Vietsub
-                                            
                                         @else
                                             Thuyết minh
-                                            
                                         @endif
                                     </span>
                                     <div class="icon_overlay"></div>
