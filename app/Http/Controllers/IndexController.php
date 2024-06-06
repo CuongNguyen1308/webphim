@@ -17,7 +17,7 @@ class IndexController extends Controller
      */
     public function home()
     {
-        $phimhot = Movie::where('phim_hot', '1')->withCount('episode')->where('status', '1')->get();
+        $phimhot = Movie::where('phim_hot', '1')->withCount('episode')->where('status', '1')->orderBy('updated_at','desc')->get();
         $phimhot_sidebar = Movie::where('phim_hot', '1')->where('status', '1')->take(20)->get();
         $phimhot_trailer = Movie::where('resolution', '5')->where('status', '1')->take(10)->get();
         $category = Category::orderBy('position', 'asc')->where('status', 1)->get();

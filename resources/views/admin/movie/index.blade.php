@@ -38,7 +38,7 @@
                     <tr>
                         <td>{{ $key }}</td>
                         <td>{{ $value->title }}</td>
-                        <td><a href="{{ route('add-episode',$value->id) }}" class="btn btn-danger">Thêm tập</a></td>
+                        <td><a href="{{ route('add-episode', $value->id) }}" class="btn btn-danger">Thêm tập</a></td>
                         <td>{{ $value->episode_count }}/{{ $value->episodes }}</td>
                         {{-- <td>{{ $value->tags }}</td> --}}
                         <td>{{ $value->slug }}</td>
@@ -67,7 +67,11 @@
                             @endif
                         </td>
                         {{-- <td>{{ $value->description }}</td> --}}
-                        <td><img src="{{ asset('uploads/movie/' . $value->image) }}" alt="" width="50px"></td>
+                        <td>
+                            <img src="{{ asset('uploads/movie/' . $value->image) }}" alt="" width="100px">
+                            <input type="file" id="file-{{ $value->id  }}" data-movie_id="{{ $value->id }}" class="form-control file-image" accept="image/" id="">
+                            <span id="success_image"></span>
+                        </td>
                         <td>
                             @if ($value->status)
                                 Hiển thị
@@ -75,14 +79,22 @@
                                 Không hiển thị
                             @endif
                         </td>
-                        <td>{{ $value->category->title }}</td>
-
                         <td>
-                            @if ($value->thuocphim == 'phimle')
-                                Phim lẻ
-                            @else
-                                Phim bộ
-                            @endif
+                            {!! Form::select('category_id', $category, isset($value) ? $value->category_id : '', [
+                                'class' => 'select-category',
+                                'id' => $value->id,
+                            ]) !!}
+                        </td>
+                        <td>
+                            {!! Form::select(
+                                'thuocphim',
+                                ['phimle' => 'Phim Lẻ', 'phimbo' => 'Phim Bộ'],
+                                isset($value) ? $value->thuocphim : '',
+                                [
+                                    'class' => 'select-thuocphim',
+                                    'id' => $value->id,
+                                ],
+                            ) !!}
                         </td>
 
                         <td>
@@ -90,13 +102,17 @@
                                 <span class="badge badge-danger bg-danger">{{ $gen->title }}</span>
                             @endforeach
                         </td>
-                        <td>{{ $value->country->title }}</td>
                         <td>
-                            @if ($value->phim_hot)
-                                HOT
-                            @else
-                                KHÔNG
-                            @endif
+                            {!! Form::select('country_id', $country, isset($value) ? $value->country_id : '', [
+                                'class' => 'select-country',
+                                'id' => $value->id,
+                            ]) !!}
+                        </td>
+                        <td>
+                            {!! Form::select('phim_hot', ['1' => 'Hot', '0' => 'Không'], isset($value) ? $value->phim_hot : '', [
+                                'class' => 'select-phimhot',
+                                'id' => $value->id,
+                            ]) !!}
                         </td>
                         <td>
                             {!! Form::selectYear('year', 2000, 2024, isset($value->year) ? $value->year : '', [
@@ -117,7 +133,7 @@
                                 'topview',
                                 ['0' => 'Ngày', '1' => 'Tuần', '2' => 'Tháng'],
                                 isset($value->topview) ? $value->topview : '',
-                                ['class' => 'select-topview', 'placeholder' => '-Chọn-','id' => $value->id ],
+                                ['class' => 'select-topview', 'placeholder' => '-Chọn-', 'id' => $value->id],
                             ) !!}
                         </td>
                         <td>{{ $value->created_at }}</td>

@@ -25,7 +25,7 @@ class MovieController extends Controller
         $genre = Genre::pluck('title', 'id');
         $country = Country::pluck('title', 'id');
         $list = Movie::with('category', 'country', 'movie_genre', 'genre')->withCount('episode')->orderBy('id', 'desc')->get();
-        
+
         // return response()->json($list);
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
@@ -167,12 +167,59 @@ class MovieController extends Controller
             unlink('uploads/movie/' . $movie->image);
         }
         // nhiều thể loại
-        Movie_genre::whereIn("movie_id",[$movie->id])->delete();
+        Movie_genre::whereIn("movie_id", [$movie->id])->delete();
         // xóa tập phim
-        Episode::where('movie_id',$movie->id)->delete();
+        Episode::where('movie_id', $movie->id)->delete();
         $movie->delete();
 
         return redirect()->back();
+    }
+    // update dữ liệu trong index
+    public function update_category(Request $request)
+    {
+        $data = $request->all();
+        $movie = Movie::find($data['id_phim']);
+        $movie->category_id = $data['category'];
+        $movie->save();
+    }
+    public function update_country(Request $request)
+    {
+        $data = $request->all();
+        $movie = Movie::find($data['id_phim']);
+        $movie->country_id = $data['country'];
+        $movie->save();
+    }
+    public function update_image(Request $request)
+    {
+        $get_image = $request->file('file');
+        $movie_id = $request->movie_id;
+        if ($get_image) {
+            $movie = Movie::find($movie_id);
+            // xóa ảnh cũ
+            unlink('uploads/movie/' . $movie->image);
+            // thêm ảnh mới
+            $get_image_name = $get_image->getClientOriginalName(); //hinhanh.jpg
+            $name_image = current(explode('.', $get_image_name)); //[0]=>hinhanh .[1]=>jpg || current lấy đầu tiên, end lấy cuối cùng
+            $new_image = $name_image . rand(0, 999) . '.' . $get_image->getClientOriginalExtension(); // hinhanh1234 .  getClientOriginalExtension() lấy đuôi mở rộng
+            $get_image->move('uploads/movie/', $new_image); // copy hình ảnh vào đường dẫn và lưu tên
+            // File::copy($path,$name_image,$path_gallery,$new_image); thêm thôi k liên quan
+            $movie->image = $new_image;
+            $movie->save();
+        }
+    }
+    public function update_thuocphim(Request $request)
+    {
+        $data = $request->all();
+        $movie = Movie::find($data['id_phim']);
+        $movie->thuocphim = $data['thuocphim'];
+        $movie->save();
+    }
+    public function update_phimhot(Request $request)
+    {
+        $data = $request->all();
+        $movie = Movie::find($data['id_phim']);
+        $movie->phim_hot = $data['phim_hot'];
+        $movie->save();
     }
     public function update_year(Request $request)
     {
@@ -195,6 +242,7 @@ class MovieController extends Controller
         $movie->topview = $data['topview'];
         $movie->save();
     }
+    // ///////////////////////////////////////////////////////////////
     public function filter_topview(Request $request)
     {
         $data = $request->all();

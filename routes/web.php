@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\HomeController;
 // admin controller
@@ -50,8 +51,14 @@ Route::get('/add-episode/{id}', [EpisodeController::class,'add_episode'])->name(
 
 // movie
 Route::resource('movie', MovieController::class);
+Route::get('/update-category-phim', [MovieController::class,'update_category']);
+Route::get('/update-country-phim', [MovieController::class,'update_country']);
+Route::post('/update-image-phim', [MovieController::class,'update_image'])->name('update-image-phim');
+Route::get('/update-thuocphim-phim', [MovieController::class,'update_thuocphim']);
+Route::get('/update-phimhot-phim', [MovieController::class,'update_phimhot']);
 Route::get('/update-year-phim', [MovieController::class,'update_year']);
 Route::get('/update-season-phim', [MovieController::class,'update_season']);
 Route::get('/update-topview', [MovieController::class,'update_topview']);
+
 Route::post('/filter-topview', [MovieController::class,'filter_topview']);
 Route::get('/filter-default', [MovieController::class,'filter_default']);

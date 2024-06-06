@@ -101,6 +101,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
     <script src="//cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+    {{-- chọn phim trong thêm phim --}}
     <script>
         $('.select-movie').change(function() {
             var id = $(this).val();
@@ -116,12 +117,119 @@
             })
         })
     </script>
+    {{-- Update category ajax --}}
+    <script type="text/javascript">
+        $('.select-category').change(function() {
+            var category = $(this).find(':selected').val();
+            var id_phim = $(this).attr('id');
+            // alert(year);
+            // alert(id_phim)
+            $.ajax({
+                url: "{{ url('/update-category-phim') }}",
+                method: "GET",
+                data: {
+                    category: category,
+                    id_phim: id_phim
+                },
+                success: function() {
+                    alert("Theo đổi thể loại phim thành " + category + " thành công");
+                }
+            })
+        })
+    </script>
+    {{-- update country --}}
+    <script type="text/javascript">
+        $('.select-country').change(function() {
+            var country = $(this).find(':selected').val();
+            var id_phim = $(this).attr('id');
+            // alert(year);
+            // alert(id_phim)
+            $.ajax({
+                url: "{{ url('/update-country-phim') }}",
+                method: "GET",
+                data: {
+                    country: country,
+                    id_phim: id_phim
+                },
+                success: function() {
+                    alert("Theo đổi quốc gia thành công");
+                }
+            })
+        })
+    </script>
+    {{-- update hình ảnh phim --}}
+    <script type="text/javascript">
+        $(document).on('change', '.file-image', function() {
+            var movie_id = $(this).data('movie_id');
+            var files = $("#file-" + movie_id)[0].files;
+            // console.log(files);
+            var image = document.getElementById("file-" + movie_id).files[0];
+            // console.log(image);
+            var form_data = new FormData();
+            form_data.append("file", document.getElementById("file-" + movie_id).files[0]);
+            form_data.append("movie_id", movie_id);
+            $.ajax({
+                url: "{{ route('update-image-phim') }}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: form_data,
+
+                contentType: false,
+                cache: false,
+                processData: false,
+
+                success: function() {
+
+                    $('#success_image').html(
+                        '<span class="text-success">Cập nhật hình ảnh thành công</span>');
+                    location.reload();
+                }
+            })
+        })
+    </script>
+    {{-- update thuocphim --}}
+    <script type="text/javascript">
+        $('.select-thuocphim').change(function() {
+            var thuocphim = $(this).find(':selected').val();
+            var id_phim = $(this).attr('id');
+            $.ajax({
+                url: "{{ url('/update-thuocphim-phim') }}",
+                method: "GET",
+                data: {
+                    thuocphim: thuocphim,
+                    id_phim: id_phim
+                },
+                success: function() {
+                    alert("Theo đổi loại phim thành công");
+                }
+            })
+        })
+    </script>
+    {{-- update thuocphim --}}
+    <script type="text/javascript">
+        $('.select-phimhot').change(function() {
+            var phim_hot = $(this).find(':selected').val();
+            var id_phim = $(this).attr('id');
+            $.ajax({
+                url: "{{ url('/update-phimhot-phim') }}",
+                method: "GET",
+                data: {
+                    phim_hot: phim_hot,
+                    id_phim: id_phim
+                },
+                success: function() {
+                    alert("Theo đổi phim hot thành công");
+                }
+            })
+        })
+    </script>
+    {{-- update year --}}
     <script type="text/javascript">
         $('.select-year').change(function() {
             var year = $(this).find(':selected').val();
             var id_phim = $(this).attr('id');
-            // alert(year);
-            // alert(id_phim)
             $.ajax({
                 url: "{{ url('/update-year-phim') }}",
                 method: "GET",
@@ -130,17 +238,16 @@
                     id_phim: id_phim
                 },
                 success: function() {
-                    alert("Theo đổi năm phim theo năm " + year + " thành công");
+                    alert("Theo đổi năm phim theo năm thành công");
                 }
             })
         })
     </script>
+    {{-- update season --}}
     <script type="text/javascript">
         $('.select-season').change(function() {
             var season = $(this).find(':selected').val();
             var id_phim = $(this).attr('id');
-            // alert(year);
-            // alert(id_phim)
             $.ajax({
                 url: "{{ url('/update-season-phim') }}",
                 method: "GET",
@@ -154,12 +261,11 @@
             })
         })
     </script>
+    {{-- update topviews --}}
     <script type="text/javascript">
         $('.select-topview').change(function() {
             var topview = $(this).find(':selected').val();
             var id_phim = $(this).attr('id');
-            // alert(year);
-            // alert(id_phim)
             if (topview == 0) {
                 text = "ngày";
             } else if (topview == 1) {
@@ -180,9 +286,11 @@
             })
         })
     </script>
-    <script type="text/javascript">
-        let tablephim = new DataTable('#tablephim');
 
+    <script type="text/javascript">
+        // datatable
+        let tablephim = new DataTable('#tablephim');
+        // chuyển chuỗi thành slug
         function ChangeToSlug() {
 
             var slug;
@@ -215,6 +323,7 @@
             document.getElementById('convert_slug').value = slug;
         }
     </script>
+    {{-- sửa vị trí của category --}}
     <script type="text/javascript">
         $(".order_position").sortable({
             placeholder: 'ui-state-highlight',
