@@ -28,6 +28,7 @@
                     <th scope="col">Năm phim</th>
                     <th scope="col">Phần phim</th>
                     <th scope="col">Topview</th>
+                    <th scope="col">Lượt xem</th>
                     <th scope="col">Created_at</th>
                     <th scope="col">Updated_at</th>
                     <th scope="col">Action</th>
@@ -135,6 +136,9 @@
                                 isset($value->topview) ? $value->topview : '',
                                 ['class' => 'select-topview', 'placeholder' => '-Chọn-', 'id' => $value->id],
                             ) !!}
+                        </td>
+                        <td>
+                            {{ $value->count_views }}
                         </td>
                         <td>{{ $value->created_at }}</td>
                         <td>{{ $value->updated_at }}</td>

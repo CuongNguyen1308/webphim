@@ -26,15 +26,28 @@
                                         @elseif ($hot_sidebar->resolution == 3)
                                             Cam
                                         @elseif ($hot_sidebar->resolution == 4)
-                                        FullHD
-                                    @else
-                                        Trailer
+                                            FullHD
+                                        @else
+                                            Trailer
                                         @endif
                                     </span>
                                 </div>
                                 <p class="title">{{ $hot_sidebar->title }}</p>
+                                {{-- hiển thị sao --}}
+
                             </a>
-                            <div class="viewsCount" style="color: #9d9d9d;">3.2K lượt xem</div>
+                            <div class="viewsCount" style="color: #9d9d9d;">Năm: {{ $hot_sidebar->year }}
+                            </div>
+                            <div class="viewsCount" style="color: #9d9d9d;">{{ $hot_sidebar->count_views }} lượt xem
+                            </div>
+
+                            <ul class="list-inline rating" title="Average Rating">
+                                @for ($count = 1; $count <= 5; $count++)
+                                    <li title="star_rating" class="star"
+                                        style="color:#ffcc00; font-size:15px; padding:0;">
+                                        &#9733;</li>
+                                @endfor
+                            </ul>
                             <div style="float: left;">
                                 <span class="user-rate-image post-large-rate stars-large-vang"
                                     style="display: block;/* width: 100%; */">
@@ -75,15 +88,26 @@
                                         @elseif ($hot_trailer->resolution == 3)
                                             Cam
                                         @elseif ($hot_trailer->resolution == 4)
-                                        FullHD
-                                    @else
-                                        Trailer
+                                            FullHD
+                                        @else
+                                            Trailer
                                         @endif
                                     </span>
                                 </div>
                                 <p class="title">{{ $hot_trailer->title }}</p>
                             </a>
-                            <div class="viewsCount" style="color: #9d9d9d;">3.2K lượt xem</div>
+                            <div class="viewsCount" style="color: #9d9d9d;">Năm: {{ $hot_trailer->year }}
+                            </div>
+                            <div class="viewsCount" style="color: #9d9d9d;">{{ $hot_trailer->count_views }} lượt xem
+                            </div>
+
+                            <ul class="list-inline rating" title="Average Rating">
+                                @for ($count = 1; $count <= 5; $count++)
+                                    <li title="star_rating" class="star"
+                                        style="color:#ffcc00; font-size:15px; padding:0;">
+                                        &#9733;</li>
+                                @endfor
+                            </ul>
                             <div style="float: left;">
                                 <span class="user-rate-image post-large-rate stars-large-vang"
                                     style="display: block;/* width: 100%; */">
@@ -105,8 +129,8 @@
         </div>
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
             <li class="nav-item active">
-                <a class="nav-link filter-sidebar" id="pills-home-tab" data-toggle="pill" href="#ngay"
-                    role="tab" aria-controls="pills-home" aria-selected="true">Ngày</a>
+                <a class="nav-link filter-sidebar" id="pills-home-tab" data-toggle="pill" href="#ngay" role="tab"
+                    aria-controls="pills-home" aria-selected="true">Ngày</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link filter-sidebar" id="pills-profile-tab" data-toggle="pill" href="#tuan"
@@ -119,7 +143,7 @@
         </ul>
         <div class="tab-content" id="pills-tabContent">
             <div id="halim-ajax-popular-post-default" class="popular-post">
-            <span id="show_data_default"></span>
+                <span id="show_data_default"></span>
             </div>
             <div class="tab-pane fade" id="tuan" role="tabpanel" aria-labelledby="pills-home-tab">
                 <div id="halim-ajax-popular-post" class="popular-post">
@@ -158,5 +182,5 @@
 
         <div class="clearfix"></div>
     </div>
-    
+
 </aside>

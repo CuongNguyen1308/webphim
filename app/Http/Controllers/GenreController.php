@@ -28,6 +28,7 @@ class GenreController extends Controller
         $genre->status = $data['status'];
         $genre->slug = $data['slug'];
         $genre->save();
+        toastr()->success('Thành công','Thêm mới thành công');
         return redirect()->back();
     }
 
@@ -70,6 +71,7 @@ class GenreController extends Controller
     public function destroy(string $id)
     {
         Genre::find($id)->delete();
+        toastr()->error('Thành công','Xóa thành công');
         return redirect()->back();
     }
 }

@@ -66,7 +66,7 @@ class MovieController extends Controller
         $movie->tags = $data['tags'];
         $movie->category_id = $data['category_id'];
         $movie->thuocphim = $data['thuocphim'];
-
+        $movie->count_views = rand(1000, 9999);
         foreach ($data['genre'] as $key => $value) {
             $movie->genre_id = $value[0];
         }
@@ -129,6 +129,7 @@ class MovieController extends Controller
         $movie->tags = $data['tags'];
         $movie->category_id = $data['category_id'];
         $movie->thuocphim = $data['thuocphim'];
+        // $movie->count_views = rand(1000,9999);
         foreach ($data['genre'] as $key => $value) {
             $movie->genre_id = $value[0];
         }
@@ -275,15 +276,25 @@ class MovieController extends Controller
                 </div>
                 <p class="title"> ' . $mov->title . '</p>
             </a>
-            <div class="viewsCount" style="color: #9d9d9d;">3.2K lượt xem</div>
+            <div class="viewsCount" style="color: #9d9d9d;">Năm: ' . $mov->year . '</div>
+            <div class="viewsCount" style="color: #9d9d9d;">Lượt xem: ' . $mov->count_views . '</div>
+            <ul class="list-inline rating" title="Average Rating">';
+
+            for ($count = 1; $count <= 5; $count++) {
+                $output .= '<li title="star_rating" class="star"
+                                        style="color:#ffcc00; font-size:15px; padding:0;">
+                                        &#9733;</li>';
+            }
+
+            $output .= '</ul>
             <div style="float: left;">
+            
                 <span class="user-rate-image post-large-rate stars-large-vang"
                     style="display: block;/* width: 100%; */">
                     <span style="width: 0%"></span>
                 </span>
             </div>
-        </div>
-            ';
+        </div>';
         }
         echo $output;
     }
@@ -320,15 +331,25 @@ class MovieController extends Controller
                 </div>
                 <p class="title"> ' . $mov->title . '</p>
             </a>
-            <div class="viewsCount" style="color: #9d9d9d;">3.2K lượt xem</div>
+            <div class="viewsCount" style="color: #9d9d9d;">Năm: ' . $mov->year . '</div>
+            <div class="viewsCount" style="color: #9d9d9d;">Lượt xem: ' . $mov->count_views . '</div>
+            <ul class="list-inline rating" title="Average Rating">';
+
+            for ($count = 1; $count <= 5; $count++) {
+                $output .= '<li title="star_rating" class="star"
+                                        style="color:#ffcc00; font-size:15px; padding:0;">
+                                        &#9733;</li>';
+            }
+
+            $output .= '</ul>
             <div style="float: left;">
+            
                 <span class="user-rate-image post-large-rate stars-large-vang"
                     style="display: block;/* width: 100%; */">
                     <span style="width: 0%"></span>
                 </span>
             </div>
-        </div>
-            ';
+        </div>';
         }
         echo $output;
     }

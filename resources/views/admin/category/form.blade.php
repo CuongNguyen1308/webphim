@@ -14,6 +14,7 @@
                                 {{ session('status') }}
                             </div>
                         @endif
+
                         @if (!isset($category))
                             {!! Form::open(['route' => 'category.store', 'method' => 'POST']) !!}
                         @else
@@ -47,7 +48,7 @@
 
                         <div class="form-group">
                             {!! Form::label('active', 'Active', []) !!}
-                            {!! Form::select('status', ['1' => 'hiển thị','0' => 'không'], isset($category) ? $category->status : '', [
+                            {!! Form::select('status', ['1' => 'hiển thị', '0' => 'không'], isset($category) ? $category->status : '', [
                                 'class' => 'form-control',
                                 'id' => 'title',
                             ]) !!}
@@ -55,8 +56,18 @@
                         @if (!isset($category))
                             {!! Form::submit('Thêm dữ liệu', ['class' => 'btn btn-success mt-3']) !!}
                         @else
-                            {!! Form::submit('Cập nhật', ['class' => 'btn btn-warning mt-3']) !!}
+                            {!! Form::submit('Cập nhật', ['class' => 'btn btn-info mt-3']) !!}
                         @endif
+                        @if ($errors->any())
+                            <div class="alert alert-danger mt-3">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         {!! Form::close() !!}
                     </div>
                 </div>

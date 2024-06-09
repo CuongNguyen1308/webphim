@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('year',20);
             $table->string('season',50);
             $table->integer('topview');
+            $table->integer('count_views');
             $table->timestamps();
         });
     }

@@ -10,6 +10,7 @@ use App\Models\Movie;
 use App\Models\Movie_genre;
 use App\Models\Episode;
 use App\Models\Rating;
+use Illuminate\Support\Carbon;
 
 class IndexController extends Controller
 {
@@ -18,7 +19,7 @@ class IndexController extends Controller
      */
     public function home()
     {
-        $phimhot = Movie::where('phim_hot', '1')->withCount('episode')->where('status', '1')->orderBy('updated_at','desc')->get();
+        $phimhot = Movie::where('phim_hot', '1')->withCount('episode')->where('status', '1')->orderBy('updated_at', 'desc')->get();
         $phimhot_sidebar = Movie::where('phim_hot', '1')->where('status', '1')->take(20)->get();
         $phimhot_trailer = Movie::where('resolution', '5')->where('status', '1')->take(10)->get();
         $category = Category::orderBy('position', 'asc')->where('status', 1)->get();
@@ -111,7 +112,7 @@ class IndexController extends Controller
         return view('pages.episode');
     }
 
-    public function movie($slug)
+    public function movie(Request $request, $slug)
     {
         $phimhot_sidebar = Movie::where('phim_hot', '1')->where('status', '1')->take(20)->get();
         $phimhot_trailer = Movie::where('resolution', '5')->where('status', '1')->take(10)->get();
@@ -129,21 +130,25 @@ class IndexController extends Controller
         // return response()->json($episode);
 
         // Rating movie
-        $rating = Rating::where('movie_id',$movie->id)->avg('rating');
+        $rating = Rating::where('movie_id', $movie->id)->avg('rating');
         $rating = round($rating);
-
-        $count_total = Rating::where('movie_id',$movie->id)->count();
-        return view('pages.movie', compact('category', 'genre', 'country', 'movie', 'related', 'phimhot_sidebar', 'phimhot_trailer', 'episode', 'episode_tapdau', 'episode_current_list_count','rating','count_total'));
+        $count_total = Rating::where('movie_id', $movie->id)->count();
+        // increase movie views
+        $views = $movie->count_views + 1;
+        $movie->count_views = $views;
+        $movie->save();
+        return view('pages.movie', compact('category', 'genre', 'country', 'movie', 'related', 'phimhot_sidebar', 'phimhot_trailer', 'episode', 'episode_tapdau', 'episode_current_list_count', 'rating', 'count_total'));
     }
     // add_rating
-    public function add_rating(Request $request){
+    public function add_rating(Request $request)
+    {
         $data = $request->all();
         $ip_address = $request->ip();
-        $rating_count = Rating::where('movie_id',$data['movie_id'])->where('ip_address',$ip_address)->count();
-        if($rating_count>0){
+        $rating_count = Rating::where('movie_id', $data['movie_id'])->where('ip_address', $ip_address)->count();
+        if ($rating_count > 0) {
             echo 'exist';
-        }else{
-            $rating= new Rating();
+        } else {
+            $rating = new Rating();
             $rating->movie_id = $data['movie_id'];
             $rating->rating = $data['index'];
             $rating->ip_address = $ip_address;
