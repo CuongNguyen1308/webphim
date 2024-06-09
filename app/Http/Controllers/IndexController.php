@@ -9,6 +9,7 @@ use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Movie_genre;
 use App\Models\Episode;
+use App\Models\Rating;
 
 class IndexController extends Controller
 {
@@ -126,7 +127,29 @@ class IndexController extends Controller
         $episode_current_list = Episode::with('movie')->where('movie_id', $movie->id)->get();
         $episode_current_list_count = $episode_current_list->count();
         // return response()->json($episode);
-        return view('pages.movie', compact('category', 'genre', 'country', 'movie', 'related', 'phimhot_sidebar', 'phimhot_trailer', 'episode', 'episode_tapdau', 'episode_current_list_count'));
+
+        // Rating movie
+        $rating = Rating::where('movie_id',$movie->id)->avg('rating');
+        $rating = round($rating);
+
+        $count_total = Rating::where('movie_id',$movie->id)->count();
+        return view('pages.movie', compact('category', 'genre', 'country', 'movie', 'related', 'phimhot_sidebar', 'phimhot_trailer', 'episode', 'episode_tapdau', 'episode_current_list_count','rating','count_total'));
+    }
+    // add_rating
+    public function add_rating(Request $request){
+        $data = $request->all();
+        $ip_address = $request->ip();
+        $rating_count = Rating::where('movie_id',$data['movie_id'])->where('ip_address',$ip_address)->count();
+        if($rating_count>0){
+            echo 'exist';
+        }else{
+            $rating= new Rating();
+            $rating->movie_id = $data['movie_id'];
+            $rating->rating = $data['index'];
+            $rating->ip_address = $ip_address;
+            $rating->save();
+            echo 'done';
+        }
     }
     public function watch($slug, $tap)
     {

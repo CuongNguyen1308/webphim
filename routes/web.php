@@ -33,6 +33,9 @@ Route::get('/tag/{tag}', [IndexController::class,'tag']);
 Route::get('/tim-kiem', [IndexController::class,'tim_kiem'])->name('tim-kiem');
 Route::get('/loc-phim', [IndexController::class,'filter_movie'])->name('filter-movie');
 
+// rating
+Route::post('/add-rating', [IndexController::class,'add_rating'])->name('add-rating');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
