@@ -10,6 +10,7 @@ use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\InfoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,3 +66,5 @@ Route::get('/update-topview', [MovieController::class,'update_topview']);
 
 Route::post('/filter-topview', [MovieController::class,'filter_topview']);
 Route::get('/filter-default', [MovieController::class,'filter_default']);
+
+Route::resource('info', InfoController::class);

@@ -190,6 +190,12 @@
                                     </li> --}}
                                 </ul>
                                 <div class="movie-trailer hidden"></div>
+                                <div class="like">
+                                    @php
+                                        $current_url = Request::url();
+                                    @endphp
+                                    <div class="fb-like" data-href="{{ $current_url }}" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="true"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -235,9 +241,7 @@
                     </div>
                     <div class="entry-content htmlwrap" style="background: white">
                         <div class="video-item halim-entry-box ">
-                            @php
-                                $current_url = Request::url();
-                            @endphp
+
                             <article class="item-content">
                                 <div class="fb-comments" data-href="{{ $current_url }}" data-width="100%"
                                     data-numposts="10"></div>

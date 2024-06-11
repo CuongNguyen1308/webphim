@@ -9,6 +9,7 @@ use App\Models\Genre;
 use App\Models\Country;
 use App\Models\Movie_genre;
 use App\Models\Episode;
+use App\Models\Info;
 // use Symfony\Component\HttpFoundation\File\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -142,7 +143,6 @@ class MovieController extends Controller
             if (file_exists('uploads/movie/' . $movie->image)) {
                 if (!empty($movie->image)) {
                     unlink('uploads/movie/' . $movie->image);
-                } else {
                     $get_image_name = $get_image->getClientOriginalName(); //hinhanh.jpg
                     $name_image = current(explode('.', $get_image_name)); //[0]=>hinhanh .[1]=>jpg || current lấy đầu tiên, end lấy cuối cùng
                     $new_image = $name_image . rand(0, 999) . '.' . $get_image->getClientOriginalExtension(); // hinhanh1234 .  getClientOriginalExtension() lấy đuôi mở rộng

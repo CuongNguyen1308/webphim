@@ -59,7 +59,8 @@
         <div class="container">
             <div class="row" id="headwrap">
                 <div class="col-md-3 col-sm-6 slogan">
-                    <p class="site-title"><a class="logo" href="{{ route('homepage') }}" title="phim hay ">Phim Hay
+                    <p class=""><a class="logo" href="{{ route('homepage') }}" title="phim hay ">
+                        <img src="{{ asset('uploads/logo/' . $info->logo) }}" alt="" height="100">
                     </p>
                     </a>
                 </div>
@@ -198,12 +199,10 @@
             <div class="row container">
                 <div class="widget about col-xs-12 col-sm-4 col-md-4">
                     <div class="footer-logo">
-                        <img class="img-responsive"
-                            src="https://img.favpng.com/9/23/19/movie-logo-png-favpng-nRr1DmYq3SNYSLN8571CHQTEG.jpg"
-                            alt="Phim hay 2021- Xem phim hay nhất" />
+                        <img src="{{ asset('uploads/logo/' . $info->logo) }}" alt="" >
                     </div>
-                    Liên hệ QC: <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                        data-cfemail="e5958d8c888d849ccb868aa58288848c89cb868a88">[email&#160;protected]</a>
+                    <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                        data-cfemail="e5958d8c888d849ccb868aa58288848c89cb868a88">{{ $info->description }}</a>
                 </div>
             </div>
         </div>
@@ -219,7 +218,7 @@
 
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous"
-        src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v20.0&appId=898219291386830" nonce="uL0K1QGI">
+        src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v20.0&appId=898219291386830" nonce="Gliqkcqj">
     </script>
     <script>
         $(".watch_trailer").click(function(e) {
