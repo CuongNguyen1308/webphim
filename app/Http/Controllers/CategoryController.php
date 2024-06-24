@@ -9,7 +9,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        //
+        $list = Category::orderBy('position', 'asc')->get();
+        return view('admin.category.index', compact('list'));
     }
     public function create()
     {
@@ -88,7 +89,7 @@ class CategoryController extends Controller
         $catetory->slug = $data['slug'];
         $catetory->save();
         toastr()->info('Cập nhật thành công','Thành công');
-        return redirect()->route('category.create');
+        return redirect()->route('category.index');
     }
 
     /**

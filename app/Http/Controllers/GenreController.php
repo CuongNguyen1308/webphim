@@ -8,7 +8,8 @@ class GenreController extends Controller
 {
     public function index()
     {
-        //
+        $list = Genre::all();
+        return view('admin.genre.index',compact('list'));
     }
     public function create()
     {
@@ -62,7 +63,7 @@ class GenreController extends Controller
         $genre->status = $data['status'];
         $genre->slug = $data['slug'];
         $genre->save();
-        return redirect()->back();
+        return redirect()->route('genre.index');
     }
 
     /**

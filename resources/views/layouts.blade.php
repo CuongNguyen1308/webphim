@@ -12,24 +12,27 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="shortcut icon"
-        href="https://www.pngkey.com/png/detail/360-3601772_your-logo-here-your-company-logo-here-png.png"
+        href="{{ asset('uploads/logo/' . $info->logo) }}"
         type="image/x-icon" />
     <meta name="revisit-after" content="1 days" />
     <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
-    <title>Phim hay 2024 - Xem phim hay nhất</title>
+    <title>{{ $meta_title }}</title>
     <meta name="description"
         content="Phim hay 2024 - Xem phim hay nhất, xem phim online miễn phí, phim hot , phim nhanh" />
     <link rel="canonical" href="">
     <link rel="next" href="" />
+
     <meta property="og:locale" content="vi_VN" />
-    <meta property="og:title" content="Phim hay 2020 - Xem phim hay nhất" />
+    <meta property="og:title" content="{{ $meta_title }}" />
     <meta property="og:description"
-        content="Phim hay 2020 - Xem phim hay nhất, phim hay trung quốc, hàn quốc, việt nam, mỹ, hong kong , chiếu rạp" />
-    <meta property="og:url" content="" />
-    <meta property="og:site_name" content="Phim hay 2021- Xem phim hay nhất" />
-    <meta property="og:image" content="" />
+        content="{{ $meta_description }}" />
+    <meta property="og:url" content="{{ Request::url() }}" />
+    <meta property="og:site_name" content="{{ $meta_title }}" />
+
+    <meta property="og:image" content="{{ $meta_image }}" />
     <meta property="og:image:width" content="300" />
     <meta property="og:image:height" content="55" />
+
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
     <link rel='dns-prefetch' href='//s.w.org' />
@@ -123,7 +126,7 @@
                             <li class="current-menu-item active"><a title="Trang Chủ"
                                     href="{{ route('homepage') }}">Trang Chủ</a>
                             </li>
-                            @foreach ($category as $key => $value)
+                            @foreach ($category_home as $key => $value)
                                 <li class="mega"><a title="{{ $value->title }}"
                                         href="{{ route('category', $value->slug) }}">{{ $value->title }}</a>
                                 </li>
@@ -141,7 +144,7 @@
                                 <a title="Thể Loại" href="#" data-toggle="dropdown" class="dropdown-toggle"
                                     aria-haspopup="true">Thể Loại <span class="caret"></span></a>
                                 <ul role="menu" class=" dropdown-menu">
-                                    @foreach ($genre as $key => $value)
+                                    @foreach ($genre_home as $key => $value)
                                         <li><a title="{{ $value->title }}"
                                                 href="{{ route('genre', $value->slug) }}">{{ $value->title }}</a>
                                         </li>
@@ -152,7 +155,7 @@
                                 <a title="Quốc Gia" href="#" data-toggle="dropdown" class="dropdown-toggle"
                                     aria-haspopup="true">Quốc Gia <span class="caret"></span></a>
                                 <ul role="menu" class=" dropdown-menu">
-                                    @foreach ($country as $key => $value)
+                                    @foreach ($country_home as $key => $value)
                                         <li><a title="{{ $value->title }}"
                                                 href="{{ route('country', $value->slug) }}">{{ $value->title }}</a>
                                         </li>
@@ -192,6 +195,7 @@
     </div>
     <div class="container">
         @yield('content')
+        @include('pages.include.banner')
     </div>
     <div class="clearfix"></div>
     <footer id="footer" class="clearfix">
@@ -214,11 +218,15 @@
 
     <script type='text/javascript' src='{{ asset('assets/js/halimtheme-core.min.js?ver=1626273138') }}' id='halim-init-js'>
     </script>
-
-
+    
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous"
         src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v20.0&appId=898219291386830" nonce="Gliqkcqj">
+    </script>
+    <script>
+        $(window).on('load',function(){
+            $('#quangcao').modal('show')
+        })
     </script>
     <script>
         $(".watch_trailer").click(function(e) {

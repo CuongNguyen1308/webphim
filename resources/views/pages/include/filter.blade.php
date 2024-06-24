@@ -19,7 +19,7 @@
         <div class="col-md-3">
             <select class="form-control select_option" name="genre">
                 <option value="" hidden>Thể loại</option>
-                @foreach ($genre as $key => $value)
+                @foreach ($genre_home as $key => $value)
                     <option {{ isset($_GET['genre']) && $_GET['genre'] == $value->id ? "selected" : ""}} value="{{ $value->id }}">{{ $value->title }}</option>
                 @endforeach
             </select>
@@ -27,7 +27,7 @@
         <div class="col-md-3">
             <select class="form-control select_option" name="country">
                 <option value="" hidden>Quốc gia</option>
-                @foreach ($country as $key => $value)
+                @foreach ($country_home as $key => $value)
                     <option {{ isset($_GET['country']) && $_GET['country'] == $value->id ? "selected" : ""}} value="{{ $value->id }}">{{ $value->title }}</option>
                 @endforeach
             </select>

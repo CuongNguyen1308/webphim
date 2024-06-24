@@ -10,7 +10,8 @@ class CountryController extends Controller
 {
     public function index()
     {
-        //
+        $list = Country::all();
+        return view('admin.country.index',compact('list'));
     }
     public function create()
     {
@@ -30,6 +31,7 @@ class CountryController extends Controller
         $country->status = $data['status'];
         $country->slug = $data['slug'];
         $country->save();
+        toastr()->success('Thành công','Thêm mới thành công');
         return redirect()->back();
     }
 
@@ -63,7 +65,7 @@ class CountryController extends Controller
         $country->status = $data['status'];
         $country->slug = $data['slug'];
         $country->save();
-        return redirect()->back();
+        return redirect()->route('country.index');
     }
 
     /**
