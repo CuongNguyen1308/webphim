@@ -99,6 +99,40 @@
                         </li>
                     </ul>
                 </li>
+                <li class="treeview {{ $segment == 'episode' ? 'active' : '' }}">
+                    <a href="#">
+                        <i class="fa fa-film" aria-hidden="true"></i>
+                        <span>Tập phim</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{ route('episode.create') }}"><i class="fa fa-angle-right"></i> Thêm tập
+                                phim</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('episode.index') }}"><i class="fa fa-angle-right"></i> Danh
+                                sách tập phim</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview {{ $segment == 'link-movie' ? 'active' : '' }}">
+                    <a href="#">
+                        <i class="fa fa-film" aria-hidden="true"></i>
+                        <span>Link phim</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{ route('link-movie.create') }}"><i class="fa fa-angle-right"></i> Thêm link
+                                phim</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('link-movie.index') }}"><i class="fa fa-angle-right"></i> Danh
+                                sách link</a>
+                        </li>
+                    </ul>
+                </li>
                 {{-- <li class="treeview">
                     <a href="#">
                         <i class="fa fa-file-video-o" aria-hidden="true"></i>

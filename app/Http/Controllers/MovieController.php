@@ -353,4 +353,13 @@ class MovieController extends Controller
         }
         echo $output;
     }
+    public function watch_video(Request $request){
+        $data = $request->all();
+        $movie = Movie::find($data['movie_id']);
+        $video = Episode::where('movie_id',$data['movie_id'])->where('episode',$data['video_episode'])->first();
+        $output['video_title']= $movie->title.' - Tập '.$data['video_episode'];
+        $output['video_desc']= $movie->description;
+        $output['video_link']=$video->linkphim;
+        echo json_encode($output);
+    }
 }

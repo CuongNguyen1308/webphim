@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Movie;
 use App\Models\Episode;
+use App\Models\Link_movie;
 
 class EpisodeController extends Controller
 {
@@ -23,7 +24,8 @@ class EpisodeController extends Controller
     public function create()
     {
         $list_movie = Movie::orderBy('id', 'desc')->pluck('title', 'id');
-        return view('admin.episode.form', compact('list_movie'));
+        $linkserver = Link_movie::pluck('title', 'id');
+        return view('admin.episode.form', compact('list_movie','linkserver'));
     }
 
     /**
@@ -39,6 +41,7 @@ class EpisodeController extends Controller
             $episode = new Episode();
             $episode->movie_id = $data['movie_id'];
             $episode->linkphim = $data['linkphim'];
+            $episode->linkserver = $data['linkserver'];
             $episode->episode = $data['episode'];
             $episode->save();
         }
@@ -47,8 +50,9 @@ class EpisodeController extends Controller
     public function add_episode($id)
     {
         $movie = Movie::find($id);
+        $linkserver = Link_movie::pluck('title', 'id');
         $list_episode = Episode::with('movie')->where('movie_id', $id)->orderBy('episode', 'desc')->get();
-        return view('admin.episode.add_episode', compact('list_episode', 'movie'));
+        return view('admin.episode.add_episode', compact('list_episode', 'movie','linkserver'));
     }
     /**
      * Display the specified resource.
@@ -63,10 +67,11 @@ class EpisodeController extends Controller
      */
     public function edit(string $id)
     {
+        $linkserver = Link_movie::pluck('title', 'id');
         $list_movie = Movie::orderBy('id', 'desc')->pluck('title', 'id');
         $episode = Episode::find($id);
         // return response()->json($episode);
-        return view('admin.episode.form', compact('episode', 'list_movie'));
+        return view('admin.episode.form', compact('episode', 'list_movie','linkserver'));
     }
 
     /**
@@ -78,9 +83,10 @@ class EpisodeController extends Controller
         $episode = Episode::find($id);
         $episode->movie_id = $data['movie_id'];
         $episode->linkphim = $data['linkphim'];
+        $episode->linkserver = $data['linkserver'];
         $episode->episode = $data['episode'];
         $episode->save();
-        return redirect()->back();
+        return redirect()->route('episode.index');
     }
 
     /**

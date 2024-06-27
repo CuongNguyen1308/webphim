@@ -33,7 +33,16 @@ class AppServiceProvider extends ServiceProvider
         $category = Category::orderBy('position', 'asc')->where('status', 1)->get();
         $genre = Genre::orderBy('id', 'desc')->get();
         $country = Country::orderBy('id', 'desc')->get();
+        // total admin
+        $category_total = Category::all()->count();
+        $genre_total = Genre::all()->count();
+        $country_total = Country::all()->count();
+        $movie_total = Movie::all()->count();
         View::share([
+            'category_total'=>$category_total,
+            'genre_total'=>$genre_total,
+            'country_total'=>$country_total,
+            'movie_total'=>$movie_total,
             'info'=>$info,
             'phimhot_sidebar'=>$phimhot_sidebar,
             'phimhot_trailer'=>$phimhot_trailer,

@@ -41,6 +41,13 @@
                                 'id' => 'linkphim',
                             ]) !!}
                         </div>
+                        <div class="form-group">
+                            {!! Form::label('linkserver', 'Link server', []) !!}
+                            {!! Form::select('linkserver', $linkserver, isset($episode) ? $episode->linkserver : '', [
+                                'class' => 'form-control',
+                                'id' => 'linkserver',
+                            ]) !!}
+                        </div>
                         @if (isset($episode))
                             <div class="form-group">
                                 {!! Form::label('episode', 'Tập phim', []) !!}

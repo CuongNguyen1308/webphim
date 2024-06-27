@@ -97,20 +97,44 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active server-1" id="server-0">
                                 <div class="halim-server">
-                                    <ul class="halim-list-eps">
-                                            @foreach ($movie->episode as $key => $sotap)
-                                                <a
-                                                    href="{{ url('xem-phim/' . $movie->slug . '/tap-' . strtolower($sotap->episode)) }}">
-                                                    <li class="halim-episode"><span
-                                                            class="halim-btn halim-btn-2 {{ strtolower($sotap->episode) == $tapphim ? 'active' : '' }} halim-info-1-1 box-shadow"
-                                                            data-post-id="37976" data-server="1" data-episode="1"
-                                                            data-position="first" data-embed="0"
-                                                            data-title="{{ $movie->title }} - Tập {{ $sotap->episode }} - {{ $movie->name_eng }}"
-                                                            data-h1="{{ $movie->title }} - Tập {{ $sotap->episode }}">{{ $sotap->episode }}</span>
-                                                    </li>
-                                                </a>
-                                            @endforeach
-                                    </ul>
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane active server-1" id="server-0">
+                                            <div class="halim-server">
+                                                <ul class="halim-list-eps">
+                                                    @foreach ($server as $key => $server)
+                                                        @foreach ($episode_movie as $key => $ser)
+                                                            @if ($ser->linkserver == $server->id)
+                                                                <li style="display: flex" class="halim-episode"><span
+                                                                        class="halim-btn halim-btn-2 halim-info-1-1 box-shadow"
+                                                                        data-h1="">{{ $server->title }}</span>
+                                                                </li>
+                                                                <ul class="halim-list-eps">
+                                                                    @foreach ($episode_list as $key=>$ep)
+                                                                        @if ($ep->linkserver == $server->id)
+                                                                            <a
+                                                                                href="{{ url('xem-phim/' . $movie->slug . '/tap-' . strtolower($ep->episode)) }}">
+                                                                                <li class="halim-episode"><span
+                                                                                        class="halim-btn halim-btn-2 {{ strtolower($ep->episode) == $tapphim ? 'active' : '' }} halim-info-1-1 box-shadow"
+                                                                                        data-post-id="37976"
+                                                                                        data-server="1" data-episode="1"
+                                                                                        data-position="first"
+                                                                                        data-embed="0"
+                                                                                        data-title="{{ $movie->title }} - Tập {{ $ep->episode }} - {{ $movie->name_eng }}"
+                                                                                        data-h1="{{ $movie->title }} - Tập {{ $ep->episode }}">{{ $ep->episode }}</span>
+                                                                                </li>
+                                                                            </a>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </ul>
+                                                            @endif
+                                                        @endforeach
+                                                    @endforeach
+                                                </ul>
+
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
@@ -169,10 +193,8 @@
                                             @endif
                                             @if ($mov->sub == 0)
                                                 Vietsub
-                                                
                                             @else
                                                 Thuyết minh
-                                                
                                             @endif
                                         </span>
                                         <div class="icon_overlay"></div>

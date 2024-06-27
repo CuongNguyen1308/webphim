@@ -1,6 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="modal fade" id="videoModal" tabindex="-1" role="dialog"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><span id="video_title"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="video_desc"></p>
+                    <p id="video_link"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="">
         <div class="col-md-12">
             <a href="{{ route('movie.create') }}" class="btn btn-primary">Thêm phim</a>
@@ -41,6 +61,12 @@
                                 <td>{{ $key }}</td>
                                 <td>{{ $value->title }}</td>
                                 <td><a href="{{ route('add-episode', $value->id) }}" class="btn btn-danger">Thêm tập</a>
+                                    @foreach ($value->episode as $ep)
+                                        <a class="text-light show_video" data-movie_video_id="{{ $ep->movie_id }}"
+                                            data-video_episode="{{ $ep->episode }}"><span
+                                                class="badge badge-dark">{{ $ep->episode }}</span></a>
+                                    @endforeach
+
                                 </td>
                                 <td>{{ $value->episode_count }}/{{ $value->episodes }}</td>
                                 {{-- <td>{{ $value->tags }}</td> --}}

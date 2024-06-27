@@ -11,6 +11,7 @@ use App\Models\Movie_genre;
 use App\Models\Episode;
 use App\Models\Rating;
 use App\Models\Info;
+use App\Models\Link_movie;
 use Illuminate\Support\Carbon;
 
 class IndexController extends Controller
@@ -157,8 +158,11 @@ class IndexController extends Controller
         $meta_image = url('uploads/movie/'.$movie->image);
         $related = Movie::with('country', 'genre', 'country')->withCount('episode')->where('category_id', $movie->category->id)->orderByRaw('RAND()')->whereNotIn('slug', [$slug])->get();
         $episode = Episode::where('movie_id', $movie->id)->where('episode', $tapphim)->first();
+        $server = Link_movie::orderBy('id','desc')->get();
+        $episode_movie = Episode::where('movie_id',$movie->id)->orderBy('episode','asc')->get()->unique('linkserver');
+        $episode_list = Episode::where('movie_id',$movie->id)->orderBy('episode','asc')->get();
         // return response()->json($movie);
-        return view('pages.watch', compact('movie', 'related', 'episode', 'tapphim', 'meta_title', 'meta_description','meta_image'));
+        return view('pages.watch', compact('movie', 'related', 'episode', 'tapphim', 'meta_title', 'meta_description','meta_image','server','episode_movie','episode_list'));
     }
     public function filter_movie()
     {

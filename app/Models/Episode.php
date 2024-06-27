@@ -11,4 +11,7 @@ class Episode extends Model
     public function movie(){
         return $this->belongsTo(Movie::class);
     }
+    public function link_movie(){
+        return $this->belongsTo(Link_movie::class);
+    }
 }

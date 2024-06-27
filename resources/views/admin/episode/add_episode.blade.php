@@ -35,6 +35,13 @@
                                 'id' => 'linkphim',
                             ]) !!}
                         </div>
+                        <div class="form-group">
+                            {!! Form::label('linkserver', 'Link server', []) !!}
+                            {!! Form::select('linkserver', $linkserver, isset($episode) ? $episode->linkserver : '', [
+                                'class' => 'form-control',
+                                'id' => 'linkserver',
+                            ]) !!}
+                        </div>
                         @if ($movie->thuocphim == "phimbo")
                         <div class="form-group">
                             {!! Form::label('episode', 'Tập phim', []) !!}
@@ -64,6 +71,7 @@
                     <th scope="col">Hình ảnh</th>
                     <th scope="col">Tập</th>
                     <th scope="col">Link phim</th>
+                    <th scope="col">Server</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -86,6 +94,7 @@
                                 {{ $value->linkphim }}
                             </div>
                         </td>
+                        <td>{{ $value->linkserver }}</td>
                         <td>
                             {{-- <a href="{{ route('episode.edit', $value->id) }}" class="btn btn-warning">Sửa</a> --}}
                             {!! Form::open([

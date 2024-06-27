@@ -10,6 +10,7 @@ use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LinkMovieController;
 use App\Http\Controllers\InfoController;
 /*
 |--------------------------------------------------------------------------
@@ -46,8 +47,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('category', CategoryController::class);
 Route::post('resorting',[CategoryController::class,'resorting'])->name('resorting');
 Route::resource('country', CountryController::class);
-
 Route::resource('genre', GenreController::class);
+Route::resource('link-movie', LinkMovieController::class);
 // episode
 Route::resource('episode', EpisodeController::class);
 Route::get('/select-movie', [EpisodeController::class,'select_movie'])->name('select-movie');
@@ -63,6 +64,7 @@ Route::get('/update-phimhot-phim', [MovieController::class,'update_phimhot']);
 Route::get('/update-year-phim', [MovieController::class,'update_year']);
 Route::get('/update-season-phim', [MovieController::class,'update_season']);
 Route::get('/update-topview', [MovieController::class,'update_topview']);
+Route::post('/watch-video', [MovieController::class,'watch_video'])->name('watch-video');
 
 Route::post('/filter-topview', [MovieController::class,'filter_topview']);
 Route::get('/filter-default', [MovieController::class,'filter_default']);
