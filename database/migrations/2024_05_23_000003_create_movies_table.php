@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('season',50);
             $table->integer('topview');
             $table->integer('count_views');
+            $table->integer('position');
             $table->timestamps();
         });
     }

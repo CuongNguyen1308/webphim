@@ -97,6 +97,9 @@
                             <a href="{{ route('movie.index') }}"><i class="fa fa-angle-right"></i> Danh
                                 sách phim</a>
                         </li>
+                        <li>
+                            <a href="{{ route('sort_movie') }}"><i class="fa fa-angle-right"></i> Sắp xếp phim</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="treeview {{ $segment == 'episode' ? 'active' : '' }}">

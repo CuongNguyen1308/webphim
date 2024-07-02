@@ -34,10 +34,16 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
     <!-- side nav css file -->
     <link href="{{ asset('backend/css/SidebarNav.min.css') }}" media="all" rel="stylesheet" type="text/css" />
     <!-- //side nav css file -->
+    <link rel='stylesheet' id='style-css' href='{{ asset('assets/css/style.css?ver=5.7.2') }}' media='all' />
+    <link rel='stylesheet' id='wp-block-library-css' href='{{ asset('assets/css/style.min.css?ver=5.7.2') }}'
+        media='all' />
+    {{-- jquery js --}}
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
     {{-- Link css --}}
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css">
     <!-- js-->
     <script src="{{ asset('backend/js/jquery-1.11.1.min.js') }}"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
     <script src="{{ asset('backend/js/modernizr.custom.js') }}"></script>
     <!--webfonts-->
     <link href="//fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext"
@@ -298,6 +304,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
     </script>
     <!-- //Classie -->
     <!-- //for toggle left push menu script -->
+
     <!--scrolling js-->
     <script src="{{ asset('backend/js/jquery.nicescroll.js') }}"></script>
     <script src="{{ asset('backend/js/scripts.js') }}"></script>
@@ -859,7 +866,60 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
     <script src="{{ asset('backend/js/bootstrap.js') }}"></script>
     <!-- //Bootstrap Core JavaScript -->
     <script src="//cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
-    
+    {{-- Sắp xếp danh mục phim --}}
+    <script>
+        $(function() {
+            $("#sortable_nav").sortable({
+                placeholder: "ui-state-highlight",
+                update: function(event, ui) {
+                    var array_id = [];
+                    $('.cate_position li').each(function() {
+                        array_id.push($(this).attr('id'));
+                    })
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ route('resorting_nav') }}",
+                        method: "POST",
+                        data: {
+                            array_id: array_id
+                        },
+                        success: function(data) {
+                            alert("Sắp xếp thứ tự thành công");
+                        }
+                    })
+                }
+            });
+            $("#sortable_nav").disableSelection();
+        });
+    </script>
+    {{-- Sắp xếp phim --}}
+    <script>
+        $(function() {
+            $(".sortable_movie").sortable({
+                update: function(event, ui) {
+                    var array_id = [];
+                    $('.mov_position article').each(function() {
+                        array_id.push($(this).attr('id'));
+                    })
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ route('resorting_mov') }}",
+                        method: "POST",
+                        data: {
+                            array_id: array_id
+                        },
+                        success: function(data) {
+                            alert("Sắp xếp thứ tự thành công");
+                        }
+                    })
+                }
+            });
+        });
+    </script>
     {{-- chọn phim trong thêm phim --}}
     <script>
         $('.select-movie').change(function() {
@@ -1108,9 +1168,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
         });
     </script>
     <script>
-        $('.show_video').click(function(){
-            var movie_id = $(this).data('movie_video_id');  
-            var video_episode = $(this).data('video_episode');  
+        $('.show_video').click(function() {
+            var movie_id = $(this).data('movie_video_id');
+            var video_episode = $(this).data('video_episode');
             $.ajax({
                 url: "{{ route('watch-video') }}",
                 method: "POST",

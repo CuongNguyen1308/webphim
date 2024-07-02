@@ -110,4 +110,13 @@ class CategoryController extends Controller
             $category->save();
         }
     }
+    public function resorting_nav(Request $request)
+    {
+        $data = $request->all();
+        foreach ($data['array_id'] as $key => $value) {
+            $category = Category::find($value);
+            $category->position = $key;
+            $category->save();
+        }
+    }
 }

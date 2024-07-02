@@ -87,8 +87,9 @@
                     </div>
                 </div>
                 <div class="col-md-4 hidden-xs">
-                    <div id="get-bookmark" class="box-shadow"><i class="hl-bookmark"></i><span> Bookmarks</span><span
-                            class="count">0</span></div>
+                    <a href="{{ route('login') }}">
+                    <div id="get-bookmark" class="box-shadow">Đăng nhập</div>
+                    </a>
                     <div id="bookmark-list" class="hidden bookmark-list-on-pc">
                         <ul style="margin: 0;"></ul>
                     </div>
@@ -112,8 +113,7 @@
                         <span class="hl-search" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="navbar-toggle collapsed pull-right get-bookmark-on-mobile">
-                        Bookmarks<i class="hl-bookmark" aria-hidden="true"></i>
-                        <span class="count">0</span>
+                        Đăng nhập
                     </button>
                     <button type="button" class="navbar-toggle collapsed pull-right get-locphim-on-mobile">
                         <a href="javascript:;" id="expand-ajax-filter" style="color: #ffed4d;">Lọc <i

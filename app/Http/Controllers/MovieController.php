@@ -362,4 +362,18 @@ class MovieController extends Controller
         $output['video_link']=$video->linkphim;
         echo json_encode($output);
     }
+    public function sort_movie(Request $request){
+        $category_home = Category::with(['movie' => function ($q) {
+            $q->withCount('episode');
+        }])->orderBy('position', 'asc')->where('status', 1)->get();
+        return view('admin.movie.sort_movie',compact('category_home'));
+    }
+    public function resorting_mov(Request $request){
+        $data = $request->all();
+        foreach ($data['array_id'] as $key => $value) {
+            $movie = Movie::find($value);
+            $movie->position = $key;
+            $movie->save();
+        }
+    }
 }

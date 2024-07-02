@@ -10,6 +10,7 @@ use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\LinkMovieController;
 use App\Http\Controllers\InfoController;
 /*
@@ -46,6 +47,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('category', CategoryController::class);
 Route::post('resorting',[CategoryController::class,'resorting'])->name('resorting');
+Route::post('resorting-nav',[CategoryController::class,'resorting_nav'])->name('resorting_nav');
 Route::resource('country', CountryController::class);
 Route::resource('genre', GenreController::class);
 Route::resource('link-movie', LinkMovieController::class);
@@ -65,8 +67,14 @@ Route::get('/update-year-phim', [MovieController::class,'update_year']);
 Route::get('/update-season-phim', [MovieController::class,'update_season']);
 Route::get('/update-topview', [MovieController::class,'update_topview']);
 Route::post('/watch-video', [MovieController::class,'watch_video'])->name('watch-video');
-
+Route::get('/sort-movie', [MovieController::class,'sort_movie'])->name('sort_movie');
 Route::post('/filter-topview', [MovieController::class,'filter_topview']);
 Route::get('/filter-default', [MovieController::class,'filter_default']);
-
+Route::post('resorting-mov',[MovieController::class,'resorting_mov'])->name('resorting_mov');
+// info
 Route::resource('info', InfoController::class);
+// login by google account
+Route::controller(GoogleController::class)->group(function(){
+    Route::get('auth/google', 'redirectToGoogle')->name('auth.google');
+    Route::get('auth/google/callback', 'handleGoogleCallback');
+});

@@ -5,11 +5,11 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
         <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Đăng nhập</h1>
-        <div class="social-login">
-            <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Sign
-                    in with Facebook</span> </button>
-            <button class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Sign
-                    in with Google+</span> </button>
+        <div class="social-login d-flex">
+            <a  class="btn facebook-btn social-btn" ><span><i class="fab fa-facebook-f"></i> Sign
+                    in with Facebook</span> </a>
+            <a href="{{ route('auth.google') }}" class="btn google-btn social-btn" ><span><i class="fab fa-google-plus-g"></i> Sign
+                    in with Google+</span> </a>
         </div>
         <p style="text-align:center"> OR </p>
 

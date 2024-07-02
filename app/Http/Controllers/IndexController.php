@@ -70,7 +70,7 @@ class IndexController extends Controller
         $meta_title = $cate_slug->title;
         $meta_description = $cate_slug->description;
         $meta_image = "";
-        $movie = Movie::where('category_id', $cate_slug->id)->withCount('episode')->orderBy('updated_at', 'desc')->paginate(40);
+        $movie = Movie::where('category_id', $cate_slug->id)->withCount('episode')->orderBy('position', 'asc')->paginate(40);
         return view('pages.category', compact('cate_slug', 'movie', 'meta_title', 'meta_description','meta_image'));
     }
     public function country($slug)
@@ -79,7 +79,7 @@ class IndexController extends Controller
         $meta_title = $coun_slug->title;
         $meta_description = $coun_slug->description;
         $meta_image = "";
-        $movie = Movie::where('country_id', $coun_slug->id)->withCount('episode')->orderBy('updated_at', 'desc')->paginate(40);
+        $movie = Movie::where('country_id', $coun_slug->id)->withCount('episode')->orderBy('position', 'desc')->paginate(40);
         return view('pages.country', compact('coun_slug', 'movie', 'meta_title', 'meta_description','meta_image'));
     }
     public function genre($slug)
@@ -94,7 +94,7 @@ class IndexController extends Controller
         foreach ($movie_genre as $key => $value) {
             $many_genre[] = $value->movie_id;
         }
-        $movie = Movie::whereIn('id', $many_genre)->withCount('episode')->orderBy('updated_at', 'desc')->paginate(40);
+        $movie = Movie::whereIn('id', $many_genre)->withCount('episode')->orderBy('position', 'desc')->paginate(40);
         return view('pages.genre', compact('gen_slug', 'movie', 'meta_title', 'meta_description','meta_image'));
     }
     public function episode()
@@ -104,7 +104,7 @@ class IndexController extends Controller
 
     public function movie(Request $request, $slug)
     {
-        $movie = Movie::with('category', 'genre', 'country', 'movie_genre', 'episode')->where('slug', $slug)->where('status', 1)->orderBy('updated_at', 'desc')->first();
+        $movie = Movie::with('category', 'genre', 'country', 'movie_genre', 'episode')->where('slug', $slug)->where('status', 1)->first();
         $meta_title = $movie->title;
         $meta_description = $movie->description;
         $meta_image = url('uploads/movie/'.$movie->image);
