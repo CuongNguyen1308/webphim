@@ -8,6 +8,7 @@ use App\Models\Country;
 use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Movie_genre;
+use App\Models\Movie_category;
 use App\Models\Episode;
 use App\Models\Rating;
 use App\Models\Info;
@@ -26,7 +27,6 @@ class IndexController extends Controller
         $meta_description = $info->description;
         $meta_image = "";
         $phimhot = Movie::where('phim_hot', '1')->withCount('episode')->where('status', '1')->orderBy('updated_at', 'desc')->get();
-
         // Nested trong laravel
         $category_home = Category::with(['movie' => function ($q) {
             $q->withCount('episode');
@@ -70,7 +70,13 @@ class IndexController extends Controller
         $meta_title = $cate_slug->title;
         $meta_description = $cate_slug->description;
         $meta_image = "";
-        $movie = Movie::where('category_id', $cate_slug->id)->withCount('episode')->orderBy('position', 'asc')->paginate(40);
+        // Nhiều danh mục
+        $movie_category = Movie_category::where("category_id", $cate_slug->id)->get();
+        $many_category = [];
+        foreach ($movie_category as $key => $value) {
+            $many_category[] = $value->movie_id;
+        }
+        $movie = Movie::whereIn('id', $many_category)->withCount('episode')->orderBy('position', 'asc')->paginate(40);
         return view('pages.category', compact('cate_slug', 'movie', 'meta_title', 'meta_description','meta_image'));
     }
     public function country($slug)
@@ -79,7 +85,7 @@ class IndexController extends Controller
         $meta_title = $coun_slug->title;
         $meta_description = $coun_slug->description;
         $meta_image = "";
-        $movie = Movie::where('country_id', $coun_slug->id)->withCount('episode')->orderBy('position', 'desc')->paginate(40);
+        $movie = Movie::where('country_id', $coun_slug->id)->withCount('episode')->orderBy('position', 'asc')->paginate(40);
         return view('pages.country', compact('coun_slug', 'movie', 'meta_title', 'meta_description','meta_image'));
     }
     public function genre($slug)
@@ -94,7 +100,7 @@ class IndexController extends Controller
         foreach ($movie_genre as $key => $value) {
             $many_genre[] = $value->movie_id;
         }
-        $movie = Movie::whereIn('id', $many_genre)->withCount('episode')->orderBy('position', 'desc')->paginate(40);
+        $movie = Movie::whereIn('id', $many_genre)->withCount('episode')->orderBy('position', 'asc')->paginate(40);
         return view('pages.genre', compact('gen_slug', 'movie', 'meta_title', 'meta_description','meta_image'));
     }
     public function episode()
@@ -104,7 +110,7 @@ class IndexController extends Controller
 
     public function movie(Request $request, $slug)
     {
-        $movie = Movie::with('category', 'genre', 'country', 'movie_genre', 'episode')->where('slug', $slug)->where('status', 1)->first();
+        $movie = Movie::with('category', 'genre', 'country', 'movie_genre','movie_category', 'episode')->where('slug', $slug)->where('status', 1)->first();
         $meta_title = $movie->title;
         $meta_description = $movie->description;
         $meta_image = url('uploads/movie/'.$movie->image);
@@ -170,7 +176,7 @@ class IndexController extends Controller
         $gen = $_GET['genre'];
         $coun = $_GET['country'];
         $year = $_GET['year'];
-        if ($order == '' && $gen == '' && $coun == '' && $year == '') {
+        if ($gen == '' && $coun == '' && $year == '') {
             return redirect()->back();
         } else {
             $movie_genre = Movie_genre::where("genre_id", $gen)->get();
@@ -182,7 +188,7 @@ class IndexController extends Controller
             $meta_title = "Tìm kiếm phim";
             $meta_description = "Tìm kiếm";
             $meta_image = "";
-            $movie = Movie::withCount('episode', 'movie_genre')->orWhere('country_id', $coun)->orWhereIn('id', $many_genre)->orWhere('year', $year)->orderBy('updated_at', 'desc')->paginate(40);
+            $movie = Movie::withCount('episode', 'movie_genre')->orWhere('country_id', $coun)->orWhereIn('id', $many_genre)->orWhere('year', $year)->orderBy($order, 'desc')->paginate(40);
             return view('pages.filter', compact('movie', 'meta_title', 'meta_description','meta_image'));
         }
     }

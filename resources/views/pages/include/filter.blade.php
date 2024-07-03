@@ -9,11 +9,10 @@
     <div class="row">
         <div class="col-md-2">
             <select class="form-control select_option" name="order">
-                <option value="" hidden>Sắp xếp</option>
-                <option value="update_at">Ngày đăng</option>
-                <option value="year_release">Năm sản xuất</option>
-                <option value="name_a_z">Tên phim</option>
-                <option value="watch_views">Lượt xem</option>
+                <option {{ isset($_GET['order']) && $_GET['order'] == 'created_at' ? "selected" : ""}} value="created_at">Ngày đăng</option>
+                <option {{ isset($_GET['order']) && $_GET['order'] == 'year' ? "selected" : ""}} value="year">Năm sản xuất</option>
+                <option {{ isset($_GET['order']) && $_GET['order'] == 'title' ? "selected" : ""}} value="title">Tên phim</option>
+                <option {{ isset($_GET['order']) && $_GET['order'] == 'topview' ? "selected" : ""}} value="topview">Lượt xem</option>
             </select>
         </div>
         <div class="col-md-3">
@@ -35,7 +34,7 @@
         <div class="col-md-2">
             <select class="form-control select_option" name="year">
                 <option value="" hidden>Năm phim</option>
-                @for ($year = 2000; $year <= 2024; $year++)
+                @for ($year = 2000; $year <= 2025; $year++)
                     <option {{ isset($_GET['year']) && $_GET['year'] == $year ? "selected" : ""}} value="{{ $year }}">Năm {{ $year }}</option>
                 @endfor
             </select>

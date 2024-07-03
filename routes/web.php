@@ -75,6 +75,6 @@ Route::post('resorting-mov',[MovieController::class,'resorting_mov'])->name('res
 Route::resource('info', InfoController::class);
 // login by google account
 Route::controller(GoogleController::class)->group(function(){
-    Route::get('auth/google', 'redirectToGoogle')->name('auth.google');
+    Route::get('auth/google', 'redirectToGoogle')->name('auth-google');
     Route::get('auth/google/callback', 'handleGoogleCallback');
 });

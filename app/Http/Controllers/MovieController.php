@@ -10,6 +10,7 @@ use App\Models\Country;
 use App\Models\Movie_genre;
 use App\Models\Episode;
 use App\Models\Info;
+use App\Models\Movie_category;
 // use Symfony\Component\HttpFoundation\File\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -43,9 +44,10 @@ class MovieController extends Controller
         $category = Category::pluck('title', 'id');
         $genre = Genre::pluck('title', 'id');
         $list_genre = Genre::all();
+        $list_category = Category::all();
         $country = Country::pluck('title', 'id');
         // $list = Movie::with('category','country','genre')->orderBy('id','desc')->get();
-        return view('admin.movie.form', compact('category', 'genre', 'country', 'list_genre'));
+        return view('admin.movie.form', compact('category', 'genre', 'country', 'list_genre','list_category'));
     }
 
     /**
@@ -65,9 +67,12 @@ class MovieController extends Controller
         $movie->sub = $data['sub'];
         $movie->description = $data['description'];
         $movie->tags = $data['tags'];
-        $movie->category_id = $data['category_id'];
         $movie->thuocphim = $data['thuocphim'];
         $movie->count_views = rand(1000, 9999);
+
+        foreach ($data['category'] as $key => $value) {
+            $movie->category_id = $value[0];
+        }
         foreach ($data['genre'] as $key => $value) {
             $movie->genre_id = $value[0];
         }
@@ -84,6 +89,7 @@ class MovieController extends Controller
             $movie->image = $new_image;
         }
         $movie->save();
+        $movie->movie_category()->attach($data['category']);
         $movie->movie_genre()->attach($data['genre']);
         return redirect()->route('movie.index');
     }
@@ -105,10 +111,12 @@ class MovieController extends Controller
         $genre = Genre::pluck('title', 'id');
         $country = Country::pluck('title', 'id');
         $list_genre = Genre::all();
+        $list_category = Category::all();
         // $list = Movie::with('category','country','genre')->orderBy('id','desc')->get();
         $movie = Movie::find($id);
+        $movie_category = $movie->movie_category;
         $movie_genre = $movie->movie_genre;
-        return view('admin.movie.form', compact('category', 'genre', 'country', 'movie', 'list_genre', 'movie_genre'));
+        return view('admin.movie.form', compact('category', 'genre', 'country', 'movie', 'list_genre','list_category' ,'movie_genre','movie_category'));
     }
 
     /**
@@ -128,9 +136,11 @@ class MovieController extends Controller
         $movie->sub = $data['sub'];
         $movie->description = $data['description'];
         $movie->tags = $data['tags'];
-        $movie->category_id = $data['category_id'];
         $movie->thuocphim = $data['thuocphim'];
         // $movie->count_views = rand(1000,9999);
+        foreach ($data['category'] as $key => $value) {
+            $movie->category_id = $value[0];
+        }
         foreach ($data['genre'] as $key => $value) {
             $movie->genre_id = $value[0];
         }
@@ -153,6 +163,7 @@ class MovieController extends Controller
             }
         }
         $movie->save();
+        $movie->movie_category()->sync($data['category']);
         $movie->movie_genre()->sync($data['genre']);
         return redirect()->route('movie.index');
     }
@@ -168,6 +179,7 @@ class MovieController extends Controller
             unlink('uploads/movie/' . $movie->image);
         }
         // nhiều thể loại
+        Movie_category::whereIn("movie_id", [$movie->id])->delete();
         Movie_genre::whereIn("movie_id", [$movie->id])->delete();
         // xóa tập phim
         Episode::where('movie_id', $movie->id)->delete();

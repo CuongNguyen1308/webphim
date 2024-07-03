@@ -26,9 +26,9 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('category.edit', $value->id) }}" class="btn btn-warning">Sửa</a>
+                            <a href="{{ route('link-movie.edit', $value->id) }}" class="btn btn-warning">Sửa</a>
                             {!! Form::open([
-                                'route' => ['category.destroy', $value->id],
+                                'route' => ['link-movie.destroy', $value->id],
                                 'method' => 'DELETE',
                                 'onsubmit' => 'return confirm("Bạn có muốn xóa không?")',
                             ]) !!}

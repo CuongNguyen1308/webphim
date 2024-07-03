@@ -61,7 +61,7 @@ class LinkMovieController extends Controller
         $linkmovie->description = $data['description'];
         $linkmovie->status = $data['status'];
         $linkmovie->save();
-        return redirect()->route('linkmovie.index');
+        return redirect()->route('link-movie.index');
     }
 
     /**

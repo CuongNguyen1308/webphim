@@ -83,8 +83,8 @@
                                 'id' => 'sub',
                             ]) !!}
                         </div>
-                        
-                        
+
+
 
                         <div class="form-group">
                             {!! Form::label('tags', 'Tags', []) !!}
@@ -109,19 +109,38 @@
                                 'id' => 'episodes',
                             ]) !!}
                         </div>
-                        <div class="form-group">
-                            {!! Form::label('category', 'Danh mục phim', []) !!}
-                            {!! Form::select('category_id', $category, isset($movie) ? $movie->category_id : '', [
-                                'class' => 'form-control',
-                                'id' => 'category',
-                            ]) !!}
-                        </div>
+
                         <div class="form-group">
                             {!! Form::label('thuocphim', 'Thuộc phim', []) !!}
-                            {!! Form::select('thuocphim', ['phimle' => 'Phim Lẻ', 'phimbo' => 'Phim Bộ'], isset($movie) ? $movie->thuocphim : '', [
+                            {!! Form::select(
+                                'thuocphim',
+                                ['phimle' => 'Phim Lẻ', 'phimbo' => 'Phim Bộ'],
+                                isset($movie) ? $movie->thuocphim : '',
+                                [
+                                    'class' => 'form-control',
+                                    'id' => 'thuocphim',
+                                ],
+                            ) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::label('category', 'Danh mục phim', []) !!} <br>
+                            {{-- {!! Form::select('category_id', $category, isset($movie) ? $movie->category_id : '', [
                                 'class' => 'form-control',
-                                'id' => 'thuocphim',
-                            ]) !!}
+                                'id' => 'category',
+                            ]) !!} --}}
+                            @foreach ($list_category as $key => $value)
+                                @if (isset($movie))
+                                    {!! Form::checkbox(
+                                        'category[]',
+                                        $value->id,
+                                        isset($movie_category) && $movie_category->contains($value->id) ? true : false,
+                                    ) !!}
+                                @else
+                                    {!! Form::checkbox('category[]', $value->id) !!}
+                                @endif
+
+                                {!! Form::label('category', $value->title) !!}
+                            @endforeach
                         </div>
                         <div class="form-group">
                             {!! Form::label('genre', 'Thể loại', []) !!} <br>
@@ -150,7 +169,7 @@
                                 'id' => 'country',
                             ]) !!}
                         </div>
-                        
+
                         <div class="form-group">
                             {!! Form::label('hot', 'Hot', []) !!}
                             {!! Form::select('phim_hot', ['1' => 'Có', '0' => 'Không'], isset($movie) ? $movie->phim_hot : '', [

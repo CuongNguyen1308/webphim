@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('movie_id')->constrained('movies');
             $table->foreignId('genre_id')->constrained('genres')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('genre_id');
             $table->timestamps();
         });
     }

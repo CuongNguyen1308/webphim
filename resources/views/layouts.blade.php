@@ -11,9 +11,7 @@
     <meta name="language" content="Việt Nam">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="shortcut icon"
-        href="{{ asset('uploads/logo/' . $info->logo) }}"
-        type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ asset('uploads/logo/' . $info->logo) }}" type="image/x-icon" />
     <meta name="revisit-after" content="1 days" />
     <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
     <title>{{ $meta_title }}</title>
@@ -24,8 +22,7 @@
 
     <meta property="og:locale" content="vi_VN" />
     <meta property="og:title" content="{{ $meta_title }}" />
-    <meta property="og:description"
-        content="{{ $meta_description }}" />
+    <meta property="og:description" content="{{ $meta_description }}" />
     <meta property="og:url" content="{{ Request::url() }}" />
     <meta property="og:site_name" content="{{ $meta_title }}" />
 
@@ -36,6 +33,9 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
     <link rel='dns-prefetch' href='//s.w.org' />
+
+    <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+    <script src="https://unpkg.com/video.js/dist/video.js"></script>
 
     <link rel='stylesheet' id='bootstrap-css' href='{{ asset('assets/css/bootstrap.min.css?ver=5.7.2') }}'
         media='all' />
@@ -63,7 +63,7 @@
             <div class="row" id="headwrap">
                 <div class="col-md-3 col-sm-6 slogan">
                     <p class=""><a class="logo" href="{{ route('homepage') }}" title="phim hay ">
-                        <img src="{{ asset('uploads/logo/' . $info->logo) }}" alt="" height="100">
+                            <img src="{{ asset('uploads/logo/' . $info->logo) }}" alt="" height="100">
                     </p>
                     </a>
                 </div>
@@ -87,9 +87,20 @@
                     </div>
                 </div>
                 <div class="col-md-4 hidden-xs">
-                    <a href="{{ route('login') }}">
-                    <div id="get-bookmark" class="box-shadow">Đăng nhập</div>
-                    </a>
+                    @auth
+                        <form action="{{ route('logout') }}" method="POST">
+                            Xin chào: {{ Auth::user()->name }}
+                            @csrf
+                            <button class="box-shadow"><i class="fa fa-sign-out"></i>
+                                Logout</button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}">
+                            <div id="get-bookmark" class="box-shadow">Đăng nhập</div>
+                        </a>
+                    @endauth
+
+
                     <div id="bookmark-list" class="hidden bookmark-list-on-pc">
                         <ul style="margin: 0;"></ul>
                     </div>
@@ -203,7 +214,7 @@
             <div class="row container">
                 <div class="widget about col-xs-12 col-sm-4 col-md-4">
                     <div class="footer-logo">
-                        <img src="{{ asset('uploads/logo/' . $info->logo) }}" alt="" >
+                        <img src="{{ asset('uploads/logo/' . $info->logo) }}" alt="">
                     </div>
                     <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
                         data-cfemail="e5958d8c888d849ccb868aa58288848c89cb868a88">{{ $info->description }}</a>
@@ -218,13 +229,13 @@
 
     <script type='text/javascript' src='{{ asset('assets/js/halimtheme-core.min.js?ver=1626273138') }}' id='halim-init-js'>
     </script>
-    
+
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous"
         src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v20.0&appId=898219291386830" nonce="Gliqkcqj">
     </script>
     <script>
-        $(window).on('load',function(){
+        $(window).on('load', function() {
             $('#quangcao').modal('show')
         })
     </script>
@@ -591,6 +602,41 @@
 
         });
     </script>
+    <script>
+        var player = videojs('my_video');
+        function handleKeydown(event) {
+      switch(event.key) {
+        case ' ':
+        case 'k':
+          // Phát hoặc dừng video
+          if (player.paused()) {
+            player.play();
+          } else {
+            player.pause();
+          }
+          break;
+        case 'ArrowRight':
+          // Tua tới 5 giây
+          player.currentTime(player.currentTime() + 10);
+          break;
+        case 'ArrowLeft':
+          // Tua lùi 5 giây
+          player.currentTime(player.currentTime() - 10);
+          break;
+        case 'ArrowUp':
+          // Tăng âm lượng
+          player.volume(player.volume() + 0.1);
+          break;
+        case 'ArrowDown':
+          // Giảm âm lượng
+          player.volume(player.volume() - 0.1);
+          break;
+      }
+    }
+
+    // Thêm sự kiện lắng nghe khi người dùng nhấn phím
+    document.addEventListener('keydown', handleKeydown);
+      </script>
 </body>
 
 </html>

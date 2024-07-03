@@ -23,13 +23,31 @@
                 <div class="clearfix wrap-content">
                     {{-- link phim --}}
                     <style>
-                        .iframe_phim iframe {
-                            width: 100%;
-                            height: 500px;
+                        .video-container {
+                          position: relative;
+                          width: 100%;
+                          max-width: 800px; /* Giới hạn tối đa */
+                          margin: auto;
                         }
-                    </style>
-                    <div class="iframe_phim">
-                        {!! $episode->linkphim !!}
+                        .video-container::after {
+                          content: "";
+                          display: block;
+                          padding-top: 56.25%; /* 16:9 ratio */
+                        }
+                        .video-container video-js,
+                        .video-container .vjs-tech {
+                          position: absolute;
+                          top: 0;
+                          left: 0;
+                          width: 100%;
+                          height: 100%;
+                        }
+                      </style>
+                    <div class="video-container col-md-12">
+                        
+                        <video-js id="my_video" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}'>
+                            <source src="{!! $episode->linkphim !!}" type="application/x-mpegURL">
+                          </video-js>
                     </div>
                     <div class="button-watch">
                         <ul class="halim-social-plugin col-xs-4 hidden-xs">

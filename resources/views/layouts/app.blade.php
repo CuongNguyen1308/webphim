@@ -126,158 +126,170 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 
 <body class="cbp-spmenu-push">
     @if (Auth::check())
-        <div class="main-content">
-            <div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+        @if (Auth::user()->role == 0)
+            <div class="main-content">
+                <div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+                    <!--left-fixed -navigation-->
+
+                    @include('layouts.navbar')
+
+                </div>
                 <!--left-fixed -navigation-->
+                <!-- header-starts -->
+                <div class="sticky-header header-section">
+                    <div class="header-left">
 
-                @include('layouts.navbar')
-
-            </div>
-            <!--left-fixed -navigation-->
-            <!-- header-starts -->
-            <div class="sticky-header header-section">
-                <div class="header-left">
-
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="header-right">
+                        <!--search-box-->
+                        <div class="search-box">
+                            <form class="input">
+                                <input class="sb-search-input input__field--madoka" placeholder="Search..."
+                                    type="search" id="input-31" />
+                                <label class="input__label" for="input-31">
+                                    <svg class="graphic" width="100%" height="100%" viewBox="0 0 404 77"
+                                        preserveAspectRatio="none">
+                                        <path d="m0,0l404,0l0,77l-404,0l0,-77z" />
+                                    </svg>
+                                </label>
+                            </form>
+                        </div>
+                        <!--//end-search-box-->
+                        <div class="profile_details">
+                            <ul>
+                                <li class="dropdown profile_details_drop">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <div class="profile_img">
+                                            <span class="prfil-img"><img src="{{ asset('backend/images/2.jpg') }}"
+                                                    alt="" />
+                                            </span>
+                                            <div class="user-name">
+                                                <p>Admin Name</p>
+                                                <span>Administrator</span>
+                                            </div>
+                                            <i class="fa fa-angle-down lnr"></i>
+                                            <i class="fa fa-angle-up lnr"></i>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu drp-mnu">
+                                        <style>
+                                            .drp-mnu li a {
+                                                color: black;
+                                            }
+                                        </style>
+                                        <li>
+                                            <a href="#"><i class="fa fa-cog"></i> Settings</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="fa fa-user"></i> My Account</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="fa fa-suitcase"></i> Profile</a>
+                                        </li>
+                                        <li>
+                                            {{-- <a href="#"><i class="fa fa-sign-out"></i> Logout</a> --}}
+                                            <form action="{{ route('logout') }}" method="POST">
+                                                @csrf
+                                                <button class="btn btn-danger btn-sm"><i class="fa fa-sign-out"></i>
+                                                    Logout</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="header-right">
-                    <!--search-box-->
-                    <div class="search-box">
-                        <form class="input">
-                            <input class="sb-search-input input__field--madoka" placeholder="Search..." type="search"
-                                id="input-31" />
-                            <label class="input__label" for="input-31">
-                                <svg class="graphic" width="100%" height="100%" viewBox="0 0 404 77"
-                                    preserveAspectRatio="none">
-                                    <path d="m0,0l404,0l0,77l-404,0l0,-77z" />
-                                </svg>
-                            </label>
-                        </form>
-                    </div>
-                    <!--//end-search-box-->
-                    <div class="profile_details">
-                        <ul>
-                            <li class="dropdown profile_details_drop">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <div class="profile_img">
-                                        <span class="prfil-img"><img src="{{ asset('backend/images/2.jpg') }}"
-                                                alt="" />
-                                        </span>
-                                        <div class="user-name">
-                                            <p>Admin Name</p>
-                                            <span>Administrator</span>
+                <!-- //header-ends -->
+                <!-- main content start-->
+                <div id="page-wrapper">
+                    <div class="main-page">
+                        <div class="col_3">
+                            <div class="col-md-3 widget widget1">
+                                <a href="{{ route('category.index') }}">
+                                    <div class="r3_counter_box">
+                                        <i class="pull-left fa fa-dollar icon-rounded"></i>
+                                        <div class="stats">
+                                            <h5><strong>{{ $category_total }}</strong></h5>
+                                            <span>Danh mục</span>
                                         </div>
-                                        <i class="fa fa-angle-down lnr"></i>
-                                        <i class="fa fa-angle-up lnr"></i>
-                                        <div class="clearfix"></div>
                                     </div>
                                 </a>
-                                <ul class="dropdown-menu drp-mnu">
-                                    <li>
-                                        <a href="#"><i class="fa fa-cog"></i> Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fa fa-user"></i> My Account</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fa fa-suitcase"></i> Profile</a>
-                                    </li>
-                                    <li>
-                                        {{-- <a href="#"><i class="fa fa-sign-out"></i> Logout</a> --}}
-                                        <form action="{{ route('logout') }}" method="POST">
-                                            @csrf
-                                            <button class="btn btn-danger btn-sm"><i class="fa fa-sign-out"></i>
-                                                Logout</button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                            </div>
+                            <div class="col-md-3 widget widget1">
+                                <a href="{{ route('country.index') }}">
+                                    <div class="r3_counter_box">
+                                        <i class="pull-left fa fa-laptop user1 icon-rounded"></i>
+                                        <div class="stats">
+                                            <h5><strong>{{ $country_total }}</strong></h5>
+                                            <span>Quốc gia</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 widget widget1">
+                                <a href="{{ route('genre.index') }}">
+                                    <div class="r3_counter_box">
+                                        <i class="pull-left fa fa-money user2 icon-rounded"></i>
+                                        <div class="stats">
+                                            <h5><strong>{{ $genre_total }}</strong></h5>
+                                            <span>Thể loại</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 widget widget1">
+                                <a href="{{ route('movie.index') }}">
+                                    <div class="r3_counter_box">
+                                        <i class="pull-left fa fa-pie-chart dollar1 icon-rounded"></i>
+                                        <div class="stats">
+                                            <h5><strong>{{ $movie_total }}</strong></h5>
+                                            <span>Phim</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 widget">
+                                <div class="r3_counter_box">
+                                    <i class="pull-left fa fa-users dollar2 icon-rounded"></i>
+                                    <div class="stats">
+                                        <h5><strong>1450</strong></h5>
+                                        <span>Total Users</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="row-one widgettable">
+
+                        </div>
+
+                        <div class="col-md-12">
+                            @yield('content')
+                            <div class="clearfix"></div>
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="clearfix"></div>
-            </div>
-            <!-- //header-ends -->
-            <!-- main content start-->
-            <div id="page-wrapper">
-                <div class="main-page">
-                    <div class="col_3">
-                        <div class="col-md-3 widget widget1">
-                            <a href="{{ route('category.index') }}">
-                                <div class="r3_counter_box">
-                                    <i class="pull-left fa fa-dollar icon-rounded"></i>
-                                    <div class="stats">
-                                        <h5><strong>{{ $category_total }}</strong></h5>
-                                        <span>Danh mục</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3 widget widget1">
-                            <a href="{{ route('country.index') }}">
-                                <div class="r3_counter_box">
-                                    <i class="pull-left fa fa-laptop user1 icon-rounded"></i>
-                                    <div class="stats">
-                                        <h5><strong>{{ $country_total }}</strong></h5>
-                                        <span>Quốc gia</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3 widget widget1">
-                            <a href="{{ route('genre.index') }}">
-                                <div class="r3_counter_box">
-                                    <i class="pull-left fa fa-money user2 icon-rounded"></i>
-                                    <div class="stats">
-                                        <h5><strong>{{ $genre_total }}</strong></h5>
-                                        <span>Thể loại</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3 widget widget1">
-                            <a href="{{ route('movie.index') }}">
-                                <div class="r3_counter_box">
-                                    <i class="pull-left fa fa-pie-chart dollar1 icon-rounded"></i>
-                                    <div class="stats">
-                                        <h5><strong>{{ $movie_total }}</strong></h5>
-                                        <span>Phim</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3 widget">
-                            <div class="r3_counter_box">
-                                <i class="pull-left fa fa-users dollar2 icon-rounded"></i>
-                                <div class="stats">
-                                    <h5><strong>1450</strong></h5>
-                                    <span>Total Users</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="row-one widgettable">
-
-                    </div>
-
-                    <div class="col-md-12">
-                        @yield('content')
-                        <div class="clearfix"></div>
-                    </div>
+                <!--footer-->
+                <div class="footer">
+                    <p>
+                        &copy; 2024 Glance Design Dashboard. All Rights Reserved | Design by
+                        <a href="=" target="_blank">Cuong</a>
+                    </p>
                 </div>
-                <div class="clearfix"></div>
+                <!--//footer-->
             </div>
-            <!--footer-->
-            <div class="footer">
-                <p>
-                    &copy; 2024 Glance Design Dashboard. All Rights Reserved | Design by
-                    <a href="=" target="_blank">Cuong</a>
-                </p>
-            </div>
-            <!--//footer-->
-        </div>
+        @elseif(Auth::user()->role != 0)
+        <script>
+            window.location.href = "{{ route('homepage') }}";
+        </script>
+        @endif
     @else
         @yield('content_login')
     @endif

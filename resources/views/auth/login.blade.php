@@ -8,7 +8,7 @@
         <div class="social-login d-flex">
             <a  class="btn facebook-btn social-btn" ><span><i class="fab fa-facebook-f"></i> Sign
                     in with Facebook</span> </a>
-            <a href="{{ route('auth.google') }}" class="btn google-btn social-btn" ><span><i class="fab fa-google-plus-g"></i> Sign
+            <a href="{{ route('auth-google') }}" class="btn google-btn social-btn" ><span><i class="fab fa-google-plus-g"></i> Sign
                     in with Google+</span> </a>
         </div>
         <p style="text-align:center"> OR </p>

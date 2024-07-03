@@ -120,8 +120,12 @@
                                         @endforeach
                                     </li>
                                     <li class="list-info-group-item"><span>Danh mục</span> :
-                                        <a href="{{ route('category', $movie->category->slug) }}"
-                                            rel="category tag">{{ $movie->category->title }}</a>
+                                        {{-- <a href="{{ route('category', $movie->category->slug) }}"
+                                            rel="category tag">{{ $movie->category->title }}</a> --}}
+                                        @foreach ($movie->movie_category as $cate)
+                                            <a href="{{ route('category', $cate->slug) }}" rel="category tag">{{ $cate->title }}
+                                            </a>
+                                        @endforeach
                                     </li>
 
                                     <li class="list-info-group-item"><span>Quốc gia</span> : <a
@@ -194,7 +198,9 @@
                                     @php
                                         $current_url = Request::url();
                                     @endphp
-                                    <div class="fb-like" data-href="{{ $current_url }}" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="true"></div>
+                                    <div class="fb-like" data-href="{{ $current_url }}" data-width=""
+                                        data-layout="button_count" data-action="like" data-size="small" data-share="true">
+                                    </div>
                                 </div>
                             </div>
                         </div>
