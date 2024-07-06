@@ -29,9 +29,19 @@
                             <div class="halim-item">
                                 <a class="halim-thumb" href="{{ route('movie', $value->slug) }}"
                                     title="{{ $value->title }}">
-                                    <figure><img class="lazy img-responsive"
-                                            src="{{ asset('uploads/movie/' . $value->image) }}" alt="{{ $value->title }}"
-                                            title="{{ $value->title }}"></figure>
+                                    <figure>
+                                        @php
+                                            $img_check = substr($value->image, 0, 5);
+                                        @endphp
+                                        @if ($img_check == 'https')
+                                            <img class="lazy img-responsive" src="{{ $value->image }}"
+                                                alt="{{ $value->title }}" title="{{ $value->title }}">
+                                        @else
+                                            <img class="lazy img-responsive"
+                                                src="{{ asset('uploads/movie/' . $value->image) }}"
+                                                alt="{{ $value->title }}" title="{{ $value->title }}">
+                                        @endif
+                                    </figure>
                                     <span class="status">
                                         @if ($value->resolution == 0)
                                             HD
@@ -53,10 +63,8 @@
                                         @endif
                                         @if ($value->sub == 0)
                                             Vietsub
-                                            
                                         @else
                                             Thuyết minh
-                                            
                                         @endif
                                     </span>
                                     <div class="icon_overlay"></div>

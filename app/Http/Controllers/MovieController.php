@@ -368,10 +368,12 @@ class MovieController extends Controller
     public function watch_video(Request $request){
         $data = $request->all();
         $movie = Movie::find($data['movie_id']);
-        $video = Episode::where('movie_id',$data['movie_id'])->where('episode',$data['video_episode'])->first();
-        $output['video_title']= $movie->title.' - Tập '.$data['video_episode'];
+        $video = Episode::where('movie_id',$data['movie_id'])->where('id',$data['episode_id'])->first();
+        $output['video_title']= $movie->title.' - '.$video->episode;
         $output['video_desc']= $movie->description;
-        $output['video_link']=$video->linkphim;
+        $output['video_link']="<iframe
+                                src="."' $video->linkphim '"." height='350px' frameborder='0' allowfullscreen='allowfullscreen' style='width:100%'></iframe>
+                        ";
         echo json_encode($output);
     }
     public function sort_movie(Request $request){

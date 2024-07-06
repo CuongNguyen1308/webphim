@@ -1182,7 +1182,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
     <script>
         $('.show_video').click(function() {
             var movie_id = $(this).data('movie_video_id');
-            var video_episode = $(this).data('video_episode');
+            var episode_id = $(this).data('episode_id');
             $.ajax({
                 url: "{{ route('watch-video') }}",
                 method: "POST",
@@ -1192,7 +1192,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                 },
                 data: {
                     movie_id: movie_id,
-                    video_episode: video_episode,
+                    episode_id: episode_id,
                 },
                 success: function(data) {
                     $("#video_title").html(data.video_title);

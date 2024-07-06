@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LeechMovieController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\IndexController;
@@ -78,3 +79,10 @@ Route::controller(GoogleController::class)->group(function(){
     Route::get('auth/google', 'redirectToGoogle')->name('auth-google');
     Route::get('auth/google/callback', 'handleGoogleCallback');
 });
+// route leech movie
+Route::resource('leech', LeechMovieController::class);
+Route::get('/leech-movie', [LeechMovieController::class,'leech_movie'])->name('leech-movie');
+Route::post('/leech-store/{slug}', [LeechMovieController::class,'leech_store'])->name('leech-store');
+Route::post('/leech-episodes-store/{slug}', [LeechMovieController::class,'leech_episodes_store'])->name('leech-episodes-store');
+Route::get('/leech-detail/{slug}', [LeechMovieController::class,'leech_detail'])->name('leech-detail');
+Route::get('/leech-episodes/{slug}', [LeechMovieController::class,'leech_episodes'])->name('leech-episodes');

@@ -13,9 +13,18 @@
                         <div class="item post">
                             <a href="{{ route('movie', $hot_sidebar->slug) }}" title="{{ $hot_sidebar->title }}">
                                 <div class="item-link">
-                                    <img src="{{ asset('uploads/movie/' . $hot_sidebar->image) }}"
-                                        class="lazy post-thumb" alt="{{ $hot_sidebar->title }}"
-                                        title="{{ $hot_sidebar->title }}" />
+                                    @php
+                                        $img_check = substr($hot_sidebar->image, 0, 5);
+                                    @endphp
+                                    @if ($img_check == 'https')
+                                        <img src="{{ $hot_sidebar->image }}" class="lazy post-thumb"
+                                            alt="{{ $hot_sidebar->title }}" title="{{ $hot_sidebar->title }}" />
+                                    @else
+                                        <img src="{{ asset('uploads/movie/' . $hot_sidebar->image) }}"
+                                            class="lazy post-thumb" alt="{{ $hot_sidebar->title }}"
+                                            title="{{ $hot_sidebar->title }}" />
+                                    @endif
+
                                     <span class="is_trailer">
                                         @if ($hot_sidebar->resolution == 0)
                                             HD
@@ -75,9 +84,19 @@
                         <div class="item post">
                             <a href="{{ route('movie', $hot_trailer->slug) }}" title="{{ $hot_trailer->title }}">
                                 <div class="item-link">
-                                    <img src="{{ asset('uploads/movie/' . $hot_trailer->image) }}"
-                                        class="lazy post-thumb" alt="{{ $hot_trailer->title }}"
-                                        title="{{ $hot_trailer->title }}" />
+                                    @php
+                                        $img_check = substr($hot_trailer->image, 0, 5);
+                                    @endphp
+                                    @if ($img_check == 'https')
+                                        <img src="{{$hot_trailer->image }}"
+                                            class="lazy post-thumb" alt="{{ $hot_trailer->title }}"
+                                            title="{{ $hot_trailer->title }}" />
+                                    @else
+                                        <img src="{{ asset('uploads/movie/' . $hot_trailer->image) }}"
+                                            class="lazy post-thumb" alt="{{ $hot_trailer->title }}"
+                                            title="{{ $hot_trailer->title }}" />
+                                    @endif
+
                                     <span class="is_trailer">
                                         @if ($hot_trailer->resolution == 0)
                                             HD

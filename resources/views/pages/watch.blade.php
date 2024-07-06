@@ -9,8 +9,8 @@
                                         href="{{ route('category', $movie->category->slug) }}">{{ $movie->category->title }}</a>
                                     » <span><a
                                             href="{{ route('country', $movie->country->slug) }}">{{ $movie->country->title }}</a>
-                                        » <span class="breadcrumb_last"
-                                            aria-current="page">{{ $movie->title }}</span></span></span></span></div>
+                                        » <a href="{{ route('movie', $movie->slug) }}"><span class="breadcrumb_last"
+                                            aria-current="page">{{ $movie->title }}</span></a></span></span></span></div>
                     </div>
                 </div>
             </div>
@@ -22,32 +22,11 @@
             <section id="content" class="test">
                 <div class="clearfix wrap-content">
                     {{-- link phim --}}
-                    <style>
-                        .video-container {
-                          position: relative;
-                          width: 100%;
-                          max-width: 800px; /* Giới hạn tối đa */
-                          margin: auto;
-                        }
-                        .video-container::after {
-                          content: "";
-                          display: block;
-                          padding-top: 56.25%; /* 16:9 ratio */
-                        }
-                        .video-container video-js,
-                        .video-container .vjs-tech {
-                          position: absolute;
-                          top: 0;
-                          left: 0;
-                          width: 100%;
-                          height: 100%;
-                        }
-                      </style>
+
                     <div class="video-container col-md-12">
-                        
-                        <video-js id="my_video" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}'>
-                            <source src="{!! $episode->linkphim !!}" type="application/x-mpegURL">
-                          </video-js>
+                        <p><iframe title="YouTube video player"
+                                src="{!! $episode->linkphim !!}" height="500px" frameborder="0" allowfullscreen="allowfullscreen" style="width:100%"></iframe>
+                        </p>
                     </div>
                     <div class="button-watch">
                         <ul class="halim-social-plugin col-xs-4 hidden-xs">
@@ -127,7 +106,7 @@
                                                                         data-h1="">{{ $server->title }}</span>
                                                                 </li>
                                                                 <ul class="halim-list-eps">
-                                                                    @foreach ($episode_list as $key=>$ep)
+                                                                    @foreach ($episode_list as $key => $ep)
                                                                         @if ($ep->linkserver == $server->id)
                                                                             <a
                                                                                 href="{{ url('xem-phim/' . $movie->slug . '/tap-' . strtolower($ep->episode)) }}">

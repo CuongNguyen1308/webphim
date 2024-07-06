@@ -67,7 +67,7 @@
                                 <td><a href="{{ route('add-episode', $value->id) }}" class="btn btn-danger">Thêm tập</a>
                                     @foreach ($value->episode as $ep)
                                         <a class="text-light show_video" data-movie_video_id="{{ $ep->movie_id }}"
-                                            data-video_episode="{{ $ep->episode }}"><span
+                                            data-episode_id="{{ $ep->id }}"><span
                                                 class="badge badge-dark">{{ $ep->episode }}</span></a>
                                     @endforeach
 
@@ -125,10 +125,18 @@
                                     ) !!}
                                 </td>
                                 <td>
-                                    <img src="{{ asset('uploads/movie/' . $value->image) }}" alt="" width="100px">
-                                    <input type="file" id="file-{{ $value->id }}"
-                                        data-movie_id="{{ $value->id }}" class="form-control file-image" accept="image/"
-                                        id="">
+                                    @php
+                                        $img_check = substr($value->image, 0, 5);
+                                    @endphp
+                                    @if ($img_check == 'https')
+                                        <img src="{{ $value->image }}" alt="" width="100px">
+                                    @else
+                                        <img src="{{ asset('uploads/movie/' . $value->image) }}" alt=""
+                                            width="100px">
+                                    @endif
+
+                                    <input type="file" id="file-{{ $value->id }}" class="form-control"
+                                        data-movie_id="{{ $value->id }}" accept="image/" id="">
                                     <span id="success_image"></span>
                                 </td>
                                 {{-- <td>{{ $value->tags }}</td> --}}
@@ -158,7 +166,7 @@
                                     @endif
                                 </td>
                                 {{-- <td>{{ $value->description }}</td> --}}
-                                
+
                                 <td>
                                     @if ($value->status)
                                         Hiển thị
@@ -166,7 +174,7 @@
                                         Không hiển thị
                                     @endif
                                 </td>
-                                
+
 
                                 <td>
                                     {{ $value->count_views }}
@@ -174,7 +182,7 @@
                                 <td>{{ $value->created_at }}</td>
                                 <td>{{ $value->updated_at }}</td>
 
-                                
+
                             </tr>
                         @endforeach
 

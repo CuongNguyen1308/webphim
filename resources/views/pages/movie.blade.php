@@ -9,8 +9,8 @@
                                         href="{{ route('category', $movie->category->slug) }}">{{ $movie->category->title }}</a>
                                     » <span><a
                                             href="{{ route('country', $movie->country->slug) }}">{{ $movie->country->title }}</a>
-                                        » <span class="breadcrumb_last"
-                                            aria-current="page">{{ $movie->title }}</span></span></span></span></div>
+                                        » <a href="{{ route('movie', $movie->slug) }}"><span class="breadcrumb_last"
+                                            aria-current="page">{{ $movie->title }}</span></a></span></span></span></div>
                     </div>
                 </div>
             </div>
@@ -28,13 +28,21 @@
                                 <div class="halim-pulse-ring"></div>
                             </div>
                             <div class="title-wrapper" style="font-weight: bold;">
-                                Bookmark
+                                {{ $movie->title }}
                             </div>
                         </div>
                         <div class="movie_info col-xs-12">
                             <div class="movie-poster col-md-3">
-                                <img class="movie-thumb" src="{{ asset('uploads/movie/' . $movie->image) }}"
-                                    alt="{{ $movie->title }}">
+                                @php
+                                    $img_check = substr($movie->image, 0, 5);
+                                @endphp
+                                @if ($img_check == 'https')
+                                    <img class="movie-thumb" src="{{ $movie->image }}" alt="{{ $movie->title }}">
+                                @else
+                                    <img class="movie-thumb" src="{{ asset('uploads/movie/' . $movie->image) }}"
+                                        alt="{{ $movie->title }}">
+                                @endif
+
                                 @if ($movie->resolution != 5)
                                     <div class="bwa-content">
                                         @if (isset($episode_tapdau))
@@ -123,7 +131,8 @@
                                         {{-- <a href="{{ route('category', $movie->category->slug) }}"
                                             rel="category tag">{{ $movie->category->title }}</a> --}}
                                         @foreach ($movie->movie_category as $cate)
-                                            <a href="{{ route('category', $cate->slug) }}" rel="category tag">{{ $cate->title }}
+                                            <a href="{{ route('category', $cate->slug) }}"
+                                                rel="category tag">{{ $cate->title }}
                                             </a>
                                         @endforeach
                                     </li>
@@ -260,11 +269,12 @@
                     <div class="entry-content htmlwrap clearfix">
                         <div class="video-item halim-entry-box">
                             <article class="item-content">
-                                <iframe width="100%" height="350"
-                                    src="https://www.youtube.com/embed/{{ $movie->trailer }}"
-                                    title="YouTube video player" frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                @if (!$movie->trailer)
+                                    <iframe width="100%" height="500" src="{{ $movie->trailer }}"
+                                        title="YouTube video player" frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                @endif
                             </article>
                         </div>
                     </div>
@@ -281,9 +291,18 @@
                                 <div class="halim-item">
                                     <a class="halim-thumb" href="{{ route('movie', $mov->slug) }}"
                                         title="{{ $mov->title }}">
-                                        <figure><img class="lazy img-responsive"
-                                                src="{{ asset('uploads/movie/' . $mov->image) }}"
-                                                alt="{{ $mov->title }}" title="{{ $mov->title }}"></figure>
+                                        <figure>
+                                            @php
+                                            $img_check = substr($mov->image, 0, 5);
+                                        @endphp
+                                        @if ($img_check == 'https')
+                                        <img class="lazy img-responsive" src="{{$mov->image }}"
+                                        alt="{{ $mov->title }}" title="{{ $mov->title }}">
+                                        @else
+                                        <img class="lazy img-responsive" src="{{ asset('uploads/movie/' . $mov->image) }}"
+                                        alt="{{ $mov->title }}" title="{{ $mov->title }}">
+                                        @endif
+                                        </figure>
                                         <span class="status">
                                             @if ($mov->resolution == 0)
                                                 HD

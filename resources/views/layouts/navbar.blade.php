@@ -136,6 +136,19 @@
                         </li>
                     </ul>
                 </li>
+                <li class="treeview {{ $segment == 'leech' ? 'active' : '' }}">
+                    <a href="#">
+                        <i class="fa fa-film" aria-hidden="true"></i>
+                        <span>Leech phim</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{ route('leech-movie') }}"><i class="fa fa-angle-right"></i> Danh
+                                sách phim</a>
+                        </li>
+                    </ul>
+                </li>
                 {{-- <li class="treeview">
                     <a href="#">
                         <i class="fa fa-file-video-o" aria-hidden="true"></i>

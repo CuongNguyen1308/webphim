@@ -34,8 +34,6 @@
 
     <link rel='dns-prefetch' href='//s.w.org' />
 
-    <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
-    <script src="https://unpkg.com/video.js/dist/video.js"></script>
 
     <link rel='stylesheet' id='bootstrap-css' href='{{ asset('assets/css/bootstrap.min.css?ver=5.7.2') }}'
         media='all' />
@@ -91,7 +89,8 @@
                         <form action="{{ route('logout') }}" method="POST">
                             Xin chào: {{ Auth::user()->name }}
                             @csrf
-                            <button class="box-shadow"><i class="fa fa-sign-out"></i>
+                            <button class="" style="background:none; border:1px solid #fff; border-radius:15px;"><i
+                                    class="fa fa-sign-out"></i>
                                 Logout</button>
                         </form>
                     @else
@@ -184,6 +183,16 @@
 
                                 </ul>
                             </li>
+                            @auth
+                                @if (Auth::user()->role == 0)
+                                    <li class="mega dropdown">
+                                        <a href="{{ route('home') }}">
+                                            Vào trang admin</a>
+                                    </li>
+                                @endif
+                            @endauth
+
+
                         </ul>
                     </div>
                     {{-- <ul class="nav navbar-nav navbar-left" style="background:#000;">
@@ -602,41 +611,7 @@
 
         });
     </script>
-    <script>
-        var player = videojs('my_video');
-        function handleKeydown(event) {
-      switch(event.key) {
-        case ' ':
-        case 'k':
-          // Phát hoặc dừng video
-          if (player.paused()) {
-            player.play();
-          } else {
-            player.pause();
-          }
-          break;
-        case 'ArrowRight':
-          // Tua tới 5 giây
-          player.currentTime(player.currentTime() + 10);
-          break;
-        case 'ArrowLeft':
-          // Tua lùi 5 giây
-          player.currentTime(player.currentTime() - 10);
-          break;
-        case 'ArrowUp':
-          // Tăng âm lượng
-          player.volume(player.volume() + 0.1);
-          break;
-        case 'ArrowDown':
-          // Giảm âm lượng
-          player.volume(player.volume() - 0.1);
-          break;
-      }
-    }
-
-    // Thêm sự kiện lắng nghe khi người dùng nhấn phím
-    document.addEventListener('keydown', handleKeydown);
-      </script>
+    
 </body>
 
 </html>

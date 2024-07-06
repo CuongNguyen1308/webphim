@@ -50,8 +50,18 @@
                     <article class="thumb grid-item post-38498">
                         <div class="halim-item">
                             <a class="halim-thumb" href="{{ route('movie', $hot->slug) }}" title="{{ $hot->title }}">
-                                <figure><img class="lazy img-responsive" src="{{ asset('uploads/movie/' . $hot->image) }}"
-                                        alt="{{ $hot->title }}" title="{{ $hot->title }}"></figure>
+                                <figure>
+                                    @php
+                                            $img_check = substr($hot->image, 0, 5);
+                                        @endphp
+                                        @if ($img_check == 'https')
+                                        <img class="lazy img-responsive" src="{{$hot->image }}"
+                                        alt="{{ $hot->title }}" title="{{ $hot->title }}">
+                                        @else
+                                        <img class="lazy img-responsive" src="{{ asset('uploads/movie/' . $hot->image) }}"
+                                        alt="{{ $hot->title }}" title="{{ $hot->title }}">
+                                        @endif
+                                </figure>
                                 <span class="status">
                                     @if ($hot->resolution == 0)
                                         HD
@@ -106,9 +116,18 @@
                             <article class="col-md-3 col-sm-3 col-xs-6 thumb grid-item post-37606">
                                 <div class="halim-item">
                                     <a class="halim-thumb" href="{{ route('movie', $mov->slug) }}">
-                                        <figure><img class="lazy img-responsive"
-                                                src="{{ asset('uploads/movie/' . $mov->image) }}"
-                                                alt="{{ $mov->title }}" title="{{ $mov->title }}">
+                                        <figure>
+                                            @php
+                                                $img_check = substr($mov->image, 0, 5);
+                                            @endphp
+                                            @if ($img_check == 'https')
+                                                <img class="lazy img-responsive" src="{{ $mov->image }}"
+                                                    alt="{{ $mov->title }}" title="{{ $mov->title }}">
+                                            @else
+                                                <img class="lazy img-responsive"
+                                                    src="{{ asset('uploads/movie/' . $mov->image) }}"
+                                                    alt="{{ $mov->title }}" title="{{ $mov->title }}">
+                                            @endif
                                         </figure>
                                         <span class="status">
                                             @if ($mov->resolution == 0)
@@ -125,17 +144,17 @@
                                                 Trailer
                                             @endif
                                         </span>
-                                            @if ($mov->episode_count > 0)
-                                                @if ($mov->thuocphim == 'phimbo')
-                                                    <span class="episode"><i class="fa fa-play" aria-hidden="true"></i>
-                                                        Tập {{ $mov->episode_count }}/{{ $mov->episodes }}
-                                                    </span>
-                                                @else
-                                                    <span class="episode"><i class="fa fa-play" aria-hidden="true"></i>
-                                                        Full
-                                                    </span>
-                                                @endif
+                                        @if ($mov->episode_count > 0)
+                                            @if ($mov->thuocphim == 'phimbo')
+                                                <span class="episode"><i class="fa fa-play" aria-hidden="true"></i>
+                                                    Tập {{ $mov->episode_count }}/{{ $mov->episodes }}
+                                                </span>
+                                            @else
+                                                <span class="episode"><i class="fa fa-play" aria-hidden="true"></i>
+                                                    Full
+                                                </span>
                                             @endif
+                                        @endif
                                         </span>
                                         <div class="icon_overlay"></div>
                                         <div class="halim-post-title-box">
