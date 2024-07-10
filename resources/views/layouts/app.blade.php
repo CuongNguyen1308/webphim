@@ -1203,6 +1203,27 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
             })
         })
     </script>
+    <script>
+        $('.leech_detail').click(function(){
+            var slug = $(this).data('movie_slug');
+            $.ajax({
+                url: "{{ route('watch-leech-detail') }}",
+                method: "POST",
+                dataType: "JSON",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    slug: slug,
+                },
+                success: function(data) {
+                    $("#content-title").html(data.content_title);
+                    $("#content-detail").html(data.content_detail);
+                }
+            })
+        } )
+    </script>
+    
 </body>
 
 </html>

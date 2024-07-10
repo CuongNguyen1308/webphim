@@ -9,7 +9,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Tên phim</th>
-                            <th scope="col">Slug</th>
+                            <th scope="col">Hình ảnh</th>
                             <th scope="col">Số tập</th>
 
                             <th scope="col">Tập phim</th>
@@ -31,32 +31,35 @@
                                 </td>
                                 <td>
                                     @foreach ($value['server_data'] as $key => $server_1)
-                                    <ul>
-                                        <li>{{ $server_1['name'] }}
-                                            <input type="text" value="{{ $server_1['link_embed'] }}"> </li>
-                                    </ul>
-                                        
+                                        <ul>
+                                            <li>{{ $server_1['name'] }}
+                                                <input type="text" value="{{ $server_1['link_embed'] }}">
+                                            </li>
+                                        </ul>
                                     @endforeach
                                 </td>
                                 <td>
                                     @foreach ($value['server_data'] as $key => $server_2)
-                                    <ul>
-                                        <li>{{ $server_2['name'] }} 
-                                        <input type="text" value="{{ $server_2['link_m3u8'] }}"> </li>
-                                    </ul>
-                                        
+                                        <ul>
+                                            <li>{{ $server_2['name'] }}
+                                                <input type="text" value="{{ $server_2['link_m3u8'] }}">
+                                            </li>
+                                        </ul>
                                     @endforeach
                                 </td>
                                 <td>
-                                    <form action="{{ route('leech-episodes-store',$resp['movie']['slug']) }}" method="post">
+                                    <form action="{{ route('leech-episodes-store', $resp['movie']['slug']) }}"
+                                        method="post">
                                         @csrf
-                                        <input type="submit" value="Thêm tập phim" class="btn btn-info btn-sm"> 
+                                        <input type="submit" value="Thêm tập phim" class="btn btn-info btn-sm">
                                     </form>
-                                    <form action="" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="submit" value="Xóa tập phim" class="btn btn-warning btn-sm"> 
-                                    </form>
+                                    @if (isset($movie_episode))
+                                        <form action="{{ route('leech-destroy', $movie->id) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="submit" value="Xóa tập phim" class="btn btn-warning btn-sm">
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

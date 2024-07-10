@@ -157,16 +157,15 @@ class IndexController extends Controller
         } else {
             $tapphim = 1;
         };
-        $tapphim = substr($tap, 4);
         $movie = Movie::where('slug', $slug)->with('category', 'episode', 'genre', 'country', 'movie_genre')->where('status', 1)->first();
-        $meta_title = $movie->title . " - Tập " . $tapphim;
+        $meta_title = $movie->title . " - " . $tapphim;
         $meta_description = $movie->description;
         $meta_image = url('uploads/movie/'.$movie->image);
         $related = Movie::with('country', 'genre', 'country')->withCount('episode')->where('category_id', $movie->category->id)->orderByRaw('RAND()')->whereNotIn('slug', [$slug])->get();
         $episode = Episode::where('movie_id', $movie->id)->where('episode', $tapphim)->first();
         $server = Link_movie::orderBy('id','desc')->get();
-        $episode_movie = Episode::where('movie_id',$movie->id)->orderBy('episode','asc')->get()->unique('linkserver');
-        $episode_list = Episode::where('movie_id',$movie->id)->orderBy('episode','asc')->get();
+        $episode_movie = Episode::where('movie_id',$movie->id)->orderBy('id','desc')->get()->unique('linkserver');
+        $episode_list = Episode::where('movie_id',$movie->id)->orderBy('id','desc')->get();
         // return response()->json($movie);
         return view('pages.watch', compact('movie', 'related', 'episode', 'tapphim', 'meta_title', 'meta_description','meta_image','server','episode_movie','episode_list'));
     }

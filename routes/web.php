@@ -84,5 +84,7 @@ Route::resource('leech', LeechMovieController::class);
 Route::get('/leech-movie', [LeechMovieController::class,'leech_movie'])->name('leech-movie');
 Route::post('/leech-store/{slug}', [LeechMovieController::class,'leech_store'])->name('leech-store');
 Route::post('/leech-episodes-store/{slug}', [LeechMovieController::class,'leech_episodes_store'])->name('leech-episodes-store');
+Route::post('/watch-leech-detail', [LeechMovieController::class,'watch_leech_detail'])->name('watch-leech-detail');
 Route::get('/leech-detail/{slug}', [LeechMovieController::class,'leech_detail'])->name('leech-detail');
 Route::get('/leech-episodes/{slug}', [LeechMovieController::class,'leech_episodes'])->name('leech-episodes');
+Route::delete('/leech-destroy/{movie_id}', [LeechMovieController::class,'leech_destroy'])->name('leech-destroy');

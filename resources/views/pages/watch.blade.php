@@ -109,9 +109,9 @@
                                                                     @foreach ($episode_list as $key => $ep)
                                                                         @if ($ep->linkserver == $server->id)
                                                                             <a
-                                                                                href="{{ url('xem-phim/' . $movie->slug . '/tap-' . strtolower($ep->episode)) }}">
+                                                                                href="{{ url('xem-phim/' . $movie->slug . '/' . $ep->episode) }}">
                                                                                 <li class="halim-episode"><span
-                                                                                        class="halim-btn halim-btn-2 {{ strtolower($ep->episode) == $tapphim ? 'active' : '' }} halim-info-1-1 box-shadow"
+                                                                                        class="halim-btn halim-btn-2 {{ $ep->episode == $tapphim ? 'active' : '' }} halim-info-1-1 box-shadow"
                                                                                         data-post-id="37976"
                                                                                         data-server="1" data-episode="1"
                                                                                         data-position="first"
@@ -167,9 +167,20 @@
                                 <div class="halim-item">
                                     <a class="halim-thumb" href="{{ route('movie', $mov->slug) }}"
                                         title="{{ $mov->title }}">
-                                        <figure><img class="lazy img-responsive"
+                                        <figure>
+                                            @php
+                                            $img_check = substr($mov->image, 0, 5);
+                                        @endphp
+                                        @if ($img_check == 'https')
+                                        <img class="lazy img-responsive"
+                                                src="{{ $mov->image }}"
+                                                alt="{{ $mov->title }}" title="{{ $mov->title }}">
+                                        @else
+                                        <img class="lazy img-responsive"
                                                 src="{{ asset('uploads/movie/' . $mov->image) }}"
-                                                alt="{{ $mov->title }}" title="{{ $mov->title }}"></figure>
+                                                alt="{{ $mov->title }}" title="{{ $mov->title }}">
+                                        @endif
+                                            </figure>
                                         <span class="status">
                                             @if ($mov->resolution == 0)
                                                 HD

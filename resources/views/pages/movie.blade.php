@@ -10,7 +10,8 @@
                                     » <span><a
                                             href="{{ route('country', $movie->country->slug) }}">{{ $movie->country->title }}</a>
                                         » <a href="{{ route('movie', $movie->slug) }}"><span class="breadcrumb_last"
-                                            aria-current="page">{{ $movie->title }}</span></a></span></span></span></div>
+                                                aria-current="page">{{ $movie->title }}</span></a></span></span></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -47,17 +48,11 @@
                                     <div class="bwa-content">
                                         @if (isset($episode_tapdau))
                                             <div class="loader"></div>
-                                            @if ($movie->thuocphim == 'phimbo')
-                                                <a href="{{ url('xem-phim/' . $movie->slug . '/tap-' . $episode_tapdau->episode) }}"
-                                                    class="bwac-btn">
-                                                    <i class="fa fa-play"></i>
-                                                </a>
-                                            @else
-                                                <a href="{{ url('xem-phim/' . $movie->slug . '/tap-' . strtolower($episode_tapdau->episode)) }}"
-                                                    class="bwac-btn">
-                                                    <i class="fa fa-play"></i>
-                                                </a>
-                                            @endif
+
+                                            <a href="{{ url('xem-phim/' . $movie->slug . '/' . $episode_tapdau->episode) }}"
+                                                class="bwac-btn">
+                                                <i class="fa fa-play"></i>
+                                            </a>
                                         @endif
                                     </div>
                                 @else
@@ -142,17 +137,14 @@
                                             rel="tag">{{ $movie->country->title }}</a></li>
                                     @if ($episode_current_list_count > 0)
                                         <li class="list-info-group-item"><span>Tập phim mới nhất</span> :
-                                            @if ($movie->thuocphim == 'phimbo')
+                                            
                                                 @if (isset($episode))
                                                     @foreach ($episode as $key => $ep)
-                                                        <a href="{{ url('xem-phim/' . $ep->movie->slug . '/tap-' . $ep->episode) }}"
+                                                        <a href="{{ url('xem-phim/' . $ep->movie->slug . '/' . $ep->episode) }}"
                                                             rel="tag">{{ $ep->episode }}</a>
                                                     @endforeach
                                                 @endif
-                                            @elseif($movie->thuocphim == 'phimle')
-                                                <a href="{{ url('xem-phim/' . $movie->slug . '/tap-' . strtolower($episode_tapdau->episode)) }}"
-                                                    rel="tag">{{ $episode_tapdau->episode }}</a>
-                                            @endif
+                                            
                                     @endif
                                     <li class="list-info-group-item">
                                         <ul class="list-inline rating" title="Average Rating">
@@ -293,15 +285,16 @@
                                         title="{{ $mov->title }}">
                                         <figure>
                                             @php
-                                            $img_check = substr($mov->image, 0, 5);
-                                        @endphp
-                                        @if ($img_check == 'https')
-                                        <img class="lazy img-responsive" src="{{$mov->image }}"
-                                        alt="{{ $mov->title }}" title="{{ $mov->title }}">
-                                        @else
-                                        <img class="lazy img-responsive" src="{{ asset('uploads/movie/' . $mov->image) }}"
-                                        alt="{{ $mov->title }}" title="{{ $mov->title }}">
-                                        @endif
+                                                $img_check = substr($mov->image, 0, 5);
+                                            @endphp
+                                            @if ($img_check == 'https')
+                                                <img class="lazy img-responsive" src="{{ $mov->image }}"
+                                                    alt="{{ $mov->title }}" title="{{ $mov->title }}">
+                                            @else
+                                                <img class="lazy img-responsive"
+                                                    src="{{ asset('uploads/movie/' . $mov->image) }}"
+                                                    alt="{{ $mov->title }}" title="{{ $mov->title }}">
+                                            @endif
                                         </figure>
                                         <span class="status">
                                             @if ($mov->resolution == 0)

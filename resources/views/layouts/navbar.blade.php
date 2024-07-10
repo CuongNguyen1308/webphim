@@ -26,14 +26,14 @@
                 @endphp
                 <li class="treeview ">
                     <a href="{{ route('info.create') }}">
-                        <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                        <i class="fa fa-desktop" aria-hidden="true"></i>
                         <span>Thông tin website</span>
 
                     </a>
                 </li>
                 <li class="treeview {{ $segment == 'category' ? 'active' : '' }}">
                     <a href="#">
-                        <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                        <i class="fa fa-list-ul" aria-hidden="true"></i>
                         <span>Danh mục</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
@@ -50,7 +50,7 @@
                 </li>
                 <li class="treeview {{ $segment == 'genre' ? 'active' : '' }}">
                     <a href="#">
-                        <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                        <i class="fa fa-list" aria-hidden="true"></i>
                         <span>Thể loại</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
@@ -104,7 +104,7 @@
                 </li>
                 <li class="treeview {{ $segment == 'episode' ? 'active' : '' }}">
                     <a href="#">
-                        <i class="fa fa-film" aria-hidden="true"></i>
+                        <i class="fa fa-clone" aria-hidden="true"></i>
                         <span>Tập phim</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
@@ -121,7 +121,7 @@
                 </li>
                 <li class="treeview {{ $segment == 'link-movie' ? 'active' : '' }}">
                     <a href="#">
-                        <i class="fa fa-film" aria-hidden="true"></i>
+                        <i class="fa fa-link" aria-hidden="true"></i>
                         <span>Link phim</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
@@ -138,7 +138,7 @@
                 </li>
                 <li class="treeview {{ $segment == 'leech' ? 'active' : '' }}">
                     <a href="#">
-                        <i class="fa fa-film" aria-hidden="true"></i>
+                        <i class="fa fa-video-camera" aria-hidden="true"></i>
                         <span>Leech phim</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>

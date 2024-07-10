@@ -8,7 +8,7 @@ use App\Models\Category;
 use App\Models\Country;
 use App\Models\Genre;
 use App\Models\Movie;
-use App\Models\Movie_genre;
+use App\Models\Movie_genre;   
 use App\Models\Episode;
 use App\Models\Rating;
 use App\Models\Info;
@@ -28,8 +28,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $info = Info::find(1);
-        $phimhot_sidebar = Movie::where('phim_hot', '1')->where('status', '1')->take(10)->get();
-        $phimhot_trailer = Movie::where('resolution', '5')->where('status', '1')->take(10)->get();
+        $phimhot_sidebar = Movie::where('phim_hot', '1')->where('status', '1')->orderBy('count_views','desc')->take(10)->get();
+        $phimhot_trailer = Movie::where('resolution', '5')->where('status', '1')->orderBy('count_views','desc')->take(10)->get();
         $category = Category::orderBy('position', 'asc')->where('status', 1)->get();
         $genre = Genre::orderBy('id', 'desc')->get();
         $country = Country::orderBy('id', 'desc')->get();

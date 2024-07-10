@@ -12,15 +12,21 @@ use App\Models\Movie_category;
 use App\Models\Movie_genre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Psy\Readline\Hoa\Console;
 
 class LeechMovieController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function leech_movie()
+    public function leech_movie(Request $request)
     {
-        $resp = Http::get("https://phimapi.com/danh-sach/phim-moi-cap-nhat?page=1")->json();
+        if (!isset($_GET['page'])) {
+            $page = 1;
+        } else{
+            $page = $_GET['page'];
+        }
+        $resp = Http::get("https://phimapi.com/danh-sach/phim-moi-cap-nhat?page=".$page)->json();
         return view('admin.leech.index', compact('resp'));
     }
 
@@ -28,6 +34,7 @@ class LeechMovieController extends Controller
     {
         $resp = Http::get("https://phimapi.com/phim/" . $slug)->json();
         $resp_movie[] = $resp['movie'];
+        
         return view('admin.leech.detail', compact('resp_movie'));
     }
 
@@ -67,14 +74,16 @@ class LeechMovieController extends Controller
             $movie->movie_category()->attach($category->id);
             $movie->movie_genre()->attach($genre->id);
         }
-        toastr()->success('Thành công','Thêm mới thành công');
+        toastr()->success('Thành công', 'Thêm mới thành công');
         return redirect()->back();
     }
 
     public function leech_episodes($slug)
     {
         $resp = Http::get("https://phimapi.com/phim/" . $slug)->json();
-        return view('admin.leech.list_episodes', compact('resp'));
+        $movie = Movie::where('slug',$slug)->first();
+        $movie_episode = Episode::where('movie_id',$movie->id)->first();
+        return view('admin.leech.list_episodes', compact('resp','movie','movie_episode'));
     }
 
     /**
@@ -90,34 +99,70 @@ class LeechMovieController extends Controller
                 $episode->movie_id = $movie->id;
                 $episode->linkphim = $res_data['link_embed'];
                 $episode->episode = $res_data['name'];
-                
-                if($key_data == 0){
-                    $linkmovie = Link_movie::orderBy('id','desc')->first();
+
+                if ($key_data == 0) {
+                    $linkmovie = Link_movie::orderBy('id', 'desc')->first();
                     $episode->linkserver = $linkmovie->id;
-                }else{
-                    $linkmovie = Link_movie::orderBy('id','asc')->first();
+                } else {
+                    $linkmovie = Link_movie::orderBy('id', 'asc')->first();
                     $episode->linkserver = $linkmovie->id;
                 }
                 $episode->save();
             }
         }
-        toastr()->success('Thành công','Thêm mới thành công');
+        toastr()->success('Thành công', 'Thêm mới thành công');
         return redirect()->back();
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function watch_leech_detail(Request $request)
     {
-        //
+        $slug = $request->slug;
+        $resp = Http::get("https://phimapi.com/phim/" . $slug)->json();
+        $output['content_title'] = $resp['movie']['name'];
+        $output['content_detail'] = '
+            <div class="row">
+                <div class="col-md-5"><img src="' . $resp['movie']['thumb_url'] . '" width="100%"></div>
+                <div class="col-md-7">
+                    <h5><b>Tên phim :</b>' . $resp['movie']['name'] . '</h5>
+                    <p><b>Tên tiếng anh:' . $resp['movie']['origin_name'] . '</b></p>
+                    <p><b>Trạng thái :</b> ' . $resp['movie']['episode_current'] . '</p>
+                    <p><b>Số tập :</b> ' . $resp['movie']['episode_total'] . '</p>
+                    <p><b>Thời lượng : </b>' . $resp['movie']['time'] . '</p>
+                    <p><b>Năm phát hành : </b>' . $resp['movie']['year'] . '</p>
+                    <p><b>Chất lượng : </b>' . $resp['movie']['quality'] . '</p>
+                    <p><b>Ngôn ngữ : </b>' . $resp['movie']['lang'] . '</p>';
+        foreach ($resp['movie']['director'] as $dir) {
+            $output['content_detail'] .= 'Đạo diễn: <span class="badge badge-pill badge-info">' . $dir . '</span><br>';
+        }
+        $output['content_detail'] .= '<b>Thể loại :</b>';
+
+        foreach ($resp['movie']['category'] as $cate) {
+            $output['content_detail'] .= '
+                        <p><span class="badge badge-pill badge-info">' . $cate['name'] . '</span></p>';
+        }
+        $output['content_detail'] .= '<b>Diễn viên :</b>';
+        foreach ($resp['movie']['actor'] as $act) {
+            $output['content_detail'] .= '
+                        <p><span class="badge badge-pill badge-info">' . $act . '</span></p>';
+        }
+        $output['content_detail'] .= '<b>Quốc gia :</b>';
+        foreach ($resp['movie']['country'] as $country) {
+            $output['content_detail'] .= '
+                        <p><span class="badge badge-pill badge-info">' . $country['name'] . '</span></p>';
+        }
+        $output['content_detail'] .= '
+
+                </div>
+            </div>
+        ';
+
+        echo json_encode($output);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function leech_destroy($movie_id)
     {
-        //
+        Episode::where('movie_id',$movie_id)->delete();
+        toastr()->error('Xóa thành công','Thành công');
+        return redirect()->back();
     }
 }

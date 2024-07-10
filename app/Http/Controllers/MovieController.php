@@ -184,7 +184,7 @@ class MovieController extends Controller
         // xóa tập phim
         Episode::where('movie_id', $movie->id)->delete();
         $movie->delete();
-
+        toastr()->error('Xóa thành công','Thành công');
         return redirect()->back();
     }
     // update dữ liệu trong index
