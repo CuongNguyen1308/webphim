@@ -161,7 +161,7 @@ class MovieController extends Controller
                     $movie->image = $new_image;
                 }
             }
-        }
+        } 
         $movie->save();
         $movie->movie_category()->sync($data['category']);
         $movie->movie_genre()->sync($data['genre']);
